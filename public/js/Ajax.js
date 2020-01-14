@@ -1,7 +1,6 @@
 class Ajax {
     constructor(url) {
         this.url = url;
-        this.url = `${this.url}`;
         this.ajaxGet(this.url, function (res) {
             const results = JSON.parse(res);
             new Display(results);
