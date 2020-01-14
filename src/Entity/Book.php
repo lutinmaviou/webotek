@@ -77,12 +77,12 @@ class Book
         return $this;
     }
 
-    public function getContent(): ?string
+    public function getDescription(): ?string
     {
         return $this->content;
     }
 
-    public function setContent(?string $content): self
+    public function setDescription(?string $content): self
     {
         $this->content = $content;
 
