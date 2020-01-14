@@ -22,19 +22,19 @@ class Book
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $author;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $img;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text")
      */
-    private $content;
+    private $description;
 
     public function getId(): ?int
     {
@@ -58,7 +58,7 @@ class Book
         return $this->author;
     }
 
-    public function setAuthor(?string $author): self
+    public function setAuthor(string $author): self
     {
         $this->author = $author;
 
@@ -70,7 +70,7 @@ class Book
         return $this->img;
     }
 
-    public function setImg(?string $img): self
+    public function setImg(string $img): self
     {
         $this->img = $img;
 
@@ -79,12 +79,12 @@ class Book
 
     public function getDescription(): ?string
     {
-        return $this->content;
+        return $this->description;
     }
 
-    public function setDescription(?string $content): self
+    public function setDescription(string $description): self
     {
-        $this->content = $content;
+        $this->description = $description;
 
         return $this;
     }
