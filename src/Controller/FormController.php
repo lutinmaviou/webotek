@@ -2,18 +2,38 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\RegisterType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class FormController extends AbstractController
 {
     /**
-     * @Route("/form", name="form")
+     * @Route("/register", name="register")
      */
-    public function index()
+    public function register(EntityManagerInterface $em, Request $request)
     {
-        return $this->render('form/index.html.twig', [
-            'controller_name' => 'FormController',
+        $form = $this->createForm(RegisterType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            //dd($data);
+            dump($data);
+            $user = new User();
+            $user->getFirstName();
+            $user->getLastName();
+            $user->getPseudo();
+            $user->getEmail();
+            //dump($em);
+            $em->persist($user);
+            $em->flush();
+        }
+
+        return $this->render('form/register.html.twig', [
+            'registerForm' => $form->createView()
         ]);
     }
 }

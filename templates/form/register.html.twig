@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Connexion - webOtek - La grande bibliothèque en ligne
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+
+            {{ form_start(registerForm) }}
+            {{ form_widget(registerForm) }}
+            <button type="submit" class="btn btn-secondary">Valider</button>
+            {{ form_end(registerForm) }}
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
