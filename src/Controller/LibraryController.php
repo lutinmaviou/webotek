@@ -20,7 +20,7 @@ class LibraryController extends AbstractController
     /**
      * @Route("/books", name="books_list")
      */
-    public function list()
+    public function listBooks()
     {
         $repo = $this->getDoctrine()->getRepository(Book::class);
         $books = $repo->findAll();
