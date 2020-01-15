@@ -27,6 +27,8 @@ class FormController extends AbstractController
             $user->getLastName();
             $user->getPseudo();
             $user->getEmail();
+            $user->getRole();
+            $user->getPassword();
             //dump($user);
             $em->persist($data);
             $em->flush();

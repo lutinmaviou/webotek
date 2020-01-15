@@ -16,7 +16,8 @@ class RegisterType extends AbstractType
             ->add('lastName')
             ->add('pseudo')
             //->add('role')
-            ->add('email');
+            ->add('email')
+            ->add('password');
     }
 
     public function configureOptions(OptionsResolver $resolver)

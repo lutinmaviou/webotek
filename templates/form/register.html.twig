@@ -5,13 +5,17 @@ Connexion - webOtek - La grande bibliothèque en ligne
 {% endblock %}
 
 {% block body %}
-<div class="container">
+<div class="container" id="register">
     <div class="row">
         <div class="col-sm-12">
 
             {{ form_start(registerForm) }}
-            {{ form_widget(registerForm) }}
-            <button type="submit" class="btn btn-secondary">Valider</button>
+            {{ form_row(registerForm.firstName, {'label': 'Nom'}) }}
+            {{ form_row(registerForm.lastName, {'label': 'Prénom'}) }}
+            {{ form_row(registerForm.pseudo, {'label': 'Pseudo'}) }}
+            {{ form_row(registerForm.email, {'label': 'Email'}) }}
+            {{ form_row(registerForm.password, {'label': 'Mot de passe'}) }}
+            <button type="submit" class="btn btn-success">Valider</button>
             {{ form_end(registerForm) }}
 
         </div>
