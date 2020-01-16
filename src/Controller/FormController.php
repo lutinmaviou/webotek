@@ -21,7 +21,7 @@ class FormController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             //dd($data);
-            dump($data);
+            //dump($data);
             $user = new User();
             $user->getFirstName();
             $user->getLastName();

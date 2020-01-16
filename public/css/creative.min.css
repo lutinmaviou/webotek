@@ -10740,7 +10740,7 @@ hr.light {
 @media (min-width:992px) {
     #mainNav {
         box-shadow: none;
-        background-color: transparent
+        background-color: black
     }
 
     #mainNav .navbar-brand {
@@ -10766,20 +10766,20 @@ hr.light {
 
     #mainNav.navbar-scrolled {
         box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
-        background-color: #fff
+        /*background-color: #fff*/
     }
 
-    #mainNav.navbar-scrolled .navbar-brand {
+    /*#mainNav.navbar-scrolled .navbar-brand {
         color: #212529
-    }
+    }*/
 
     #mainNav.navbar-scrolled .navbar-brand:hover {
         color: #f4623a
     }
 
-    #mainNav.navbar-scrolled .navbar-nav .nav-item .nav-link {
+    /*#mainNav.navbar-scrolled .navbar-nav .nav-item .nav-link {
         color: #212529
-    }
+    }*/
 
     #mainNav.navbar-scrolled .navbar-nav .nav-item .nav-link:hover {
         color: #f4623a
