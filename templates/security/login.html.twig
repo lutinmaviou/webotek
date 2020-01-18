@@ -3,7 +3,7 @@
 {% block title %}Connexion - webOtek - La grande bibliothèque en ligne{% endblock %}
 
 {% block body %}
-<div class="container" id="register">
+<div class="container connection">
     <div class="row">
         <div class="col-sm-4">
             <form method="post">
@@ -22,7 +22,11 @@
                 <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control"
                     required autofocus>
                 <label for="inputPassword">Password</label>
-                <input type="password" name="password" id="inputPassword" class="form-control" required>
+                <input type="password" name="password" id="inputPassword" class="form-control">
+                <div class="checkbox mb-3">
+                    <label for=""><input type="checkbox" value="remember-me">Se souvenir de moi
+                    </label>
+                </div>
 
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 

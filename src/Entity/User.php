@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+//use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -28,10 +30,16 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @var string The hashed password
+     * @var string The non hashed password
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @var string The hashed password
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -61,7 +69,7 @@ class User implements UserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
+        dump($this->email);
         return $this;
     }
 
@@ -105,7 +113,23 @@ class User implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
+        dump($this->password);
+        dump($this);
+        return $this;
+    }
 
+    /**
+     * @see UserInterface
+     */
+    public function getPlainPassword(): string
+    {
+        return (string) $this->plainPassword;
+    }
+
+    public function setPlainPassword(string $password): self
+    {
+        $this->plainPassword = $password;
+        dump($this->plainPassword);
         return $this;
     }
 
