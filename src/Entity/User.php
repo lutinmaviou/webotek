@@ -36,12 +36,6 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @var string The hashed password
-     * @Assert\Length(max=4096)
-     */
-    private $plainPassword;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $firstName;
@@ -69,7 +63,7 @@ class User implements UserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-        dump($this->email);
+
         return $this;
     }
 
@@ -113,23 +107,7 @@ class User implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
-        dump($this->password);
-        dump($this);
-        return $this;
-    }
 
-    /**
-     * @see UserInterface
-     */
-    public function getPlainPassword(): string
-    {
-        return (string) $this->plainPassword;
-    }
-
-    public function setPlainPassword(string $password): self
-    {
-        $this->plainPassword = $password;
-        dump($this->plainPassword);
         return $this;
     }
 

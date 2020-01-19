@@ -47,7 +47,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     {
         $credentials = [
             'email' => $request->request->get('email'),
-            //'password' => $request->request->get('password'),
+            'password' => $request->request->get('password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
         $request->getSession()->set(
@@ -77,8 +77,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        //return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
-        return true;
+        //return true;
+        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
 
     /**
@@ -86,8 +86,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
      */
     public function getPassword($credentials): ?string
     {
-        //return $credentials['password'];
-        return true;
+        //return true;
+        return $credentials['password'];
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
@@ -97,7 +97,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         }
 
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        throw new \Exception('TODO: provide a valid redirect inside ' . __FILE__);
+        //throw new \Exception('TODO: provide a valid redirect inside ' . __FILE__);
+        return new RedirectResponse($this->urlGenerator->generate('home'));
     }
 
     protected function getLoginUrl()
