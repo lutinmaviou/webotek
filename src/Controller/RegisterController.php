@@ -33,6 +33,8 @@ class RegisterController extends AbstractController
             $data = $form->getData();
             $em->persist($data);
             $em->flush();
+            //$this->addFlash('success', 'Votre compte à bien été enregistré.');
+            return $this->redirectToRoute('home');
         }
 
         return $this->render('form/register.html.twig', [

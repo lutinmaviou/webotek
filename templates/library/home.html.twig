@@ -4,13 +4,22 @@
 Accueil - webOtek - La grande bibliothèque en ligne
 {% endblock %}
 
+{% block home_link %}
+<li class="nav-item">
+    <a class="nav-link js-scroll-trigger" href="#page-top">Accueil</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link js-scroll-trigger" href="#categories">Catégories</a>
+</li>
+{% endblock %}
+
 {% block body %}
 
 <!-- Masthead -->
 <header class="masthead">
     <div class="container h-100">
         <div class="row h-100 align-items-center justify-content-center text-center">
-            {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
+            {% if app.user %}
             <p id="hello">Bonjour {{ app.user.pseudo }} !</p>
             {% endif %}
             <div class="col-lg-10 align-self-end">

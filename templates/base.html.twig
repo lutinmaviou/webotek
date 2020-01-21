@@ -43,27 +43,35 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto my-2 my-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="#page-top">Accueil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="#categories">Catégories</a>
-                    </li>
+                    {% block home_link %}{% endblock %}
+                    {% if not app.user %}
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger" href="{{ path('app_login') }}">Connexion</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger" href="{{ path('app_register') }}">Inscription</a>
                     </li>
-                    <!--
+                    {% endif %}
+                    {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="{{ path('books_list') }}">Liste</a>
+                        <a class="nav-link js-scroll-trigger" href="{{ path('books_list') }}">Bibliothèque</a>
                     </li>
-                    -->
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="{{ path('app_logout') }}">Déconnexion</a>
+                    </li>
+                    {% endif %}
+
                 </ul>
             </div>
         </div>
     </nav>
+    {#
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{message}}
+    </div>
+    {% endfor %}
+    #}
     {% block body %}{% endblock %}
 
     {% block javascripts %}
