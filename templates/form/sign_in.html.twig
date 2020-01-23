@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Inscription - webOtek - La grande bibliothèque en ligne
+{% endblock %}
+
+{% block body %}
+<div class="container connection text-center">
+    <div class="row justify-content-center">
+        <div class="col-sm-4">
+            {{ form_start(sign_in_form) }}
+            {{ form_row(sign_in_form.firstName, {'label': 'Nom'}) }}
+            {{ form_row(sign_in_form.lastName, {'label': 'Prénom'}) }}
+            {{ form_row(sign_in_form.pseudo, {'label': 'Pseudo'}) }}
+            {{ form_row(sign_in_form.email, {'label': 'Email'}) }}
+            {{ form_row(sign_in_form.password, {'label': 'Mot de passe'}) }}
+            <button type="submit" class="btn btn-success">Valider</button>
+            {{ form_end(sign_in_form) }}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

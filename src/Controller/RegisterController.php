@@ -13,9 +13,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class RegisterController extends AbstractController
 {
     /**
-     * @Route("/register", name="app_register")
+     * @Route("/sign-in", name="app_sign_in")
      */
-    public function register(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function signIn(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = new User();
         $form = $this->createForm(RegisterType::class, $user);
@@ -31,11 +31,10 @@ class RegisterController extends AbstractController
             $em->flush();
             $this->addFlash('success', 'Votre compte à bien été enregistré.');
             return $this->redirectToRoute('app_login');
-            // Connecter automatiquement
         }
 
-        return $this->render('form/register.html.twig', [
-            'registerForm' => $form->createView()
+        return $this->render('form/sign_in.html.twig', [
+            'sign_in_form' => $form->createView()
         ]);
     }
 }
