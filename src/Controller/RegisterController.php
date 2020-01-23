@@ -21,20 +21,17 @@ class RegisterController extends AbstractController
         $form = $this->createForm(RegisterType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            //$user->getFirstName();
-            //$user->getLastName();
-            //$user->getPseudo();
-            //$user->getEmail();
-            $user->getRoles();
-            dump($user->getRoles());
+            //$user->getRoles();
             $password = $passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
+            $user->setRoles(['ROLE_USER']);
             //$user->getPassword();
             $data = $form->getData();
             $em->persist($data);
             $em->flush();
-            //$this->addFlash('success', 'Votre compte à bien été enregistré.');
-            return $this->redirectToRoute('home');
+            $this->addFlash('success', 'Votre compte à bien été enregistré.');
+            return $this->redirectToRoute('app_login');
+            // Connecter automatiquement
         }
 
         return $this->render('form/register.html.twig', [

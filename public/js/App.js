@@ -10,6 +10,7 @@ class App {
         this.options = `&maxResults=${this.nbResults}&langRestrict=fr`;
         this.url;
         this.bookSearch = this.bookSearch.bind(this);
+        this.addBook = this.addBook.bind(this);
         this.searchByCategory();
         this.searchCatBySelect();
         this.seeMore = this.seeMore.bind(this);
@@ -24,8 +25,8 @@ class App {
         $('#display-button').empty();
         this.search = $('#search').val();
         this.url = this.api + this.search + this.options;
-        console.log(this.url);
-        new Ajax(this.url);
+        //console.log(this.url);
+        new AjaxGet(this.url);
     }
 
     // Find books by Author
@@ -36,13 +37,13 @@ class App {
 
     searchCatBySelect() {
         const that = this;
-        $("select").change(function () {
+        $("select").change(() => {
             $("select option:selected").each(function () {
                 that.subText = this.value;
                 $('#display-results').empty();
                 $('#display-button').empty();
                 that.url = that.api + that.param + that.subText + that.options;
-                new Ajax(that.url);
+                new AjaxGet(that.url);
             });
         });
     }
@@ -50,15 +51,14 @@ class App {
     // Find books with the categories buttons
 
     searchByCategory() {
-        const that = this;
         const btn = $('#categories button');
         for (let i = 0; i < btn.length; i++) {
-            $(btn[i]).click(function () {
+            $(btn[i]).click(() => {
                 $('#display-results').empty();
                 $('#display-button').empty();
-                that.subText = btn[i].value;
-                that.url = that.api + that.param + that.subText + that.options;
-                new Ajax(that.url);
+                this.subText = btn[i].value;
+                this.url = this.api + this.param + this.subText + this.options;
+                new AjaxGet(this.url);
             });
         }
     }
@@ -71,13 +71,18 @@ class App {
             this.startIndex += this.nbResults;
             this.index = `&startIndex=${this.startIndex}`;
             this.url = this.api + this.param + this.subText + this.index + this.options;
-            new Ajax(this.url);
+            new AjaxGet(this.url);
         } else {
             this.startIndex += this.nbResults;
             this.index = `&startIndex=${this.startIndex}`;
             this.url = this.api + this.search + this.index + this.options;
-            new Ajax(this.url);
+            new AjaxGet(this.url);
         }
+    }
+
+    addBook() {
+        console.log('clic');
+        new AjaxPost();
     }
 
     // "Click" functions assignation
@@ -85,6 +90,7 @@ class App {
     assign() {
         $('#go').click(this.bookSearch);
         $('#display-button').click(this.seeMore);
+        $('#toto').click(this.addBook);
     }
 }
 new App(3);

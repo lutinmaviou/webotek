@@ -1,4 +1,4 @@
-class Ajax {
+class AjaxGet {
     constructor(url) {
         this.url = url;
         this.ajaxGet(this.url, function (res) {

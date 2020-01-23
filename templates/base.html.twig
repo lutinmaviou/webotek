@@ -65,13 +65,13 @@
             </div>
         </div>
     </nav>
-    {#
+
     {% for message in app.flashes('success') %}
-    <div class="alert alert-success">
+    <div class="alert alert-success mb-n3" id="message-flash">
         {{message}}
     </div>
     {% endfor %}
-    #}
+
     {% block body %}{% endblock %}
 
     {% block javascripts %}
@@ -87,7 +87,8 @@
     <!-- Custom scripts for this template -->
     <script src="js/creative.min.js"></script>
     <script src="js/Display.js"></script>
-    <script src="js/Ajax.js"></script>
+    <script src="js/AjaxGet.js"></script>
+    <script src="js/AjaxPost.js"></script>
     <script src="js/App.js"></script>
     {% endblock %}
 

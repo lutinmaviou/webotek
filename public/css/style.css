@@ -7,5 +7,22 @@
 }
 
 #hello {
-    color: white;
+    color: rgb(238, 238, 238);
+}
+
+#message-flash {
+    margin-top: 5.5rem;
+    text-align: center;
+}
+
+@media screen and (max-width: 500px) {
+    #message-flash {
+        margin-bottom: -5rem !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #message-flash {
+        margin-bottom: -8rem !important;
+    }
 }

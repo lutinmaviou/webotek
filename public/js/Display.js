@@ -29,7 +29,7 @@ class Display {
                 description = $('<p class="mt-4 mb-5 px-5" style ="color: black">Pas encore de description</p>');
             }
             const separation = $('<hr>');
-            const buttons = $('<div class="mb-5"><button class="btn btn-light md-4">Ajouter</button><button class="btn btn-light ml-4">Réserver</button></div>')
+            const buttons = $('<div class="mb-5"><button class="btn btn-light md-4" id="add-book">Ajouter à la bibliothèque</button>')
             $('#display-results').append(title, author, img, description, buttons, separation);
         }
     }
