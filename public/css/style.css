@@ -15,6 +15,11 @@
     text-align: center;
 }
 
+#forums-title {
+    margin-top: 8rem;
+}
+
+
 @media screen and (max-width: 500px) {
     #message-flash {
         margin-bottom: -5rem !important;

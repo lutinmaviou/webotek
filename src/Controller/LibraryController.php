@@ -10,7 +10,7 @@ class LibraryController extends AbstractController
 {
 
     /**
-     * @Route("/", name="home")
+     * @Route("/", name="app_home")
      */
     public function home()
     {
@@ -27,5 +27,13 @@ class LibraryController extends AbstractController
         return $this->render('library/booksList.html.twig', [
             'books' => $books
         ]);
+    }
+
+    /**
+     * @Route("/forums", name="app-forums")
+     */
+    public function forums()
+    {
+        return $this->render('library/forums.html.twig');
     }
 }
