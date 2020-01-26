@@ -30,7 +30,7 @@ class LibraryController extends AbstractController
     }
 
     /**
-     * @Route("/forums", name="app-forums")
+     * @Route("/forums", name="app_forums")
      */
     public function forums()
     {

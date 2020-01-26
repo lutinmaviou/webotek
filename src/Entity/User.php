@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 //use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -49,6 +51,16 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $pseudo;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Forum", mappedBy="relation")
+     */
+    private $forums;
+
+    public function __construct()
+    {
+        $this->forums = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -160,6 +172,37 @@ class User implements UserInterface
     public function setPseudo(string $pseudo): self
     {
         $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Forum[]
+     */
+    public function getForums(): Collection
+    {
+        return $this->forums;
+    }
+
+    public function addForum(Forum $forum): self
+    {
+        if (!$this->forums->contains($forum)) {
+            $this->forums[] = $forum;
+            $forum->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeForum(Forum $forum): self
+    {
+        if ($this->forums->contains($forum)) {
+            $this->forums->removeElement($forum);
+            // set the owning side to null (unless already changed)
+            if ($forum->getAuthor() === $this) {
+                $forum->setAuthor(null);
+            }
+        }
 
         return $this;
     }
