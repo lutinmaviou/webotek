@@ -42,7 +42,7 @@ class LibraryController extends AbstractController
     }
 
     /**
-     * @Route("/forum", name="app_forum")
+     * @Route("/forums", name="app_forums")
      */
     public function createForum(EntityManagerInterface $em, Request $request)
     {
@@ -53,14 +53,17 @@ class LibraryController extends AbstractController
             $forum->setCreationDate(new \DateTime());
             //$forum->setAuthor();
             $data = $form->getData();
-            dump($data);
-            //$em->persist($data);
-            //$em->flush();
+            $em->persist($data);
+            $em->flush();
             $this->addFlash('success', 'Nouveau forum créé avec succès !');
+            return $this->redirectToRoute('app_forums');
         }
+        $repo = $this->getDoctrine()->getRepository(forum::class);
+        $forums = $repo->findAll();
 
-        return $this->render('library/forum.html.twig', [
-            'new_forum_form' => $form->createView()
+        return $this->render('library/forums.html.twig', [
+            'new_forum_form' => $form->createView(),
+            'forums' => $forums
         ]);
     }
 }

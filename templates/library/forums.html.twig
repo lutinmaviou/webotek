@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<h1 id="forums-title">Forums</h1>
+
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-sm-10">
+
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">SUJET</th>
+                        {#<th scope="col">AUTHEUR</th>#}
+                        <th scope="col">Date de création</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for forum in forums %}
+
+                    <tr>
+                        <td><a href="#">{{ forum.topic }}</a></td>
+                        <td>{{ forums[0].creationDate | date('d/m/Y') }}</td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+            <h2>Créer un nouveau forum</h2>
+
+            {{ form_start(new_forum_form) }}
+            {{ form_row(new_forum_form.topic, {'label': 'Sujet', 'value': ''}) }}
+            <button type="submit" class="btn btn-success">Valider</button>
+            {{ form_end(new_forum_form) }}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
