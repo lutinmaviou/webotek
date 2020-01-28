@@ -55,11 +55,11 @@ class User implements UserInterface
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Forum", mappedBy="relation")
      */
-    private $forums;
+    private $forum;
 
     public function __construct()
     {
-        $this->forums = new ArrayCollection();
+        $this->forum = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -179,15 +179,15 @@ class User implements UserInterface
     /**
      * @return Collection|Forum[]
      */
-    public function getForums(): Collection
+    public function getForum(): Collection
     {
-        return $this->forums;
+        return $this->forum;
     }
 
     public function addForum(Forum $forum): self
     {
-        if (!$this->forums->contains($forum)) {
-            $this->forums[] = $forum;
+        if (!$this->forum->contains($forum)) {
+            $this->forum[] = $forum;
             $forum->setAuthor($this);
         }
 
@@ -196,8 +196,8 @@ class User implements UserInterface
 
     public function removeForum(Forum $forum): self
     {
-        if ($this->forums->contains($forum)) {
-            $this->forums->removeElement($forum);
+        if ($this->forum->contains($forum)) {
+            $this->forum->removeElement($forum);
             // set the owning side to null (unless already changed)
             if ($forum->getAuthor() === $this) {
                 $forum->setAuthor(null);

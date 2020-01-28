@@ -38,7 +38,11 @@
                     </tr>
                 </tbody>
             </table>
-            <button type="submit" class="btn btn-success mx-auto">Nouveau sujet</button>
+            <h2>Créer un nouveau forum</h2>
+            {{ form_start(new_forum_form) }}
+            {{ form_row(new_forum_form.topic, {'label': 'Sujet'}) }}
+            <button type="submit" class="btn btn-success">Valider</button>
+            {{ form_end(new_forum_form) }}
         </div>
     </div>
 </div>

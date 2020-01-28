@@ -27,10 +27,11 @@ class RegisterController extends AbstractController
             $user->setRoles(['ROLE_USER']);
             //$user->getPassword();
             $data = $form->getData();
-            $em->persist($data);
-            $em->flush();
+            dump($data);
+            //$em->persist($data);
+            //$em->flush();
             $this->addFlash('success', 'Votre compte à bien été enregistré !');
-            return $this->redirectToRoute('app_login');
+            //return $this->redirectToRoute('app_login');
         }
 
         return $this->render('form/sign_in.html.twig', [

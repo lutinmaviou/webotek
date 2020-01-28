@@ -27,7 +27,7 @@ class Forum
     private $creationDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="forums")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="forum")
      */
     private $author;
 

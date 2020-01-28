@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Book;
+use App\Entity\Forum;
+use App\Form\NewForumType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class LibraryController extends AbstractController
@@ -30,10 +34,33 @@ class LibraryController extends AbstractController
     }
 
     /**
-     * @Route("/forums", name="app_forums")
+     * @Route("/forum", name="app_forum")
      */
-    public function forums()
+    public function forum()
     {
-        return $this->render('library/forums.html.twig');
+        return $this->render('library/forum.html.twig');
+    }
+
+    /**
+     * @Route("/forum", name="app_forum")
+     */
+    public function createForum(EntityManagerInterface $em, Request $request)
+    {
+        $forum = new Forum();
+        $form = $this->createForm(NewForumType::class, $forum);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $forum->setCreationDate(new \DateTime());
+            //$forum->setAuthor();
+            $data = $form->getData();
+            dump($data);
+            //$em->persist($data);
+            //$em->flush();
+            $this->addFlash('success', 'Nouveau forum créé avec succès !');
+        }
+
+        return $this->render('library/forum.html.twig', [
+            'new_forum_form' => $form->createView()
+        ]);
     }
 }
