@@ -23,7 +23,7 @@
                         <td>
                             <a href="{{ path('app_forum_display', {slug: forum.slug}) }}">{{ forum.topic }}</a>
                         </td>
-                        <td>{{ forums.creationDate | date('d/m/Y') }}</td>
+                        <td>{{ forums[0].creationDate | date('d/m/Y') }}</td>
                     </tr>
 
                     {% endfor %}

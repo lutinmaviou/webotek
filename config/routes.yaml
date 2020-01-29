@@ -1,3 +1,8 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+#app_forum_display:
+#    path: /{slug}
+#    controller: App\Controller\LibraryController::displayForum
+

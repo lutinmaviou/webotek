@@ -60,21 +60,22 @@ class LibraryController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(forum::class);
         $forums = $repo->findAll();
 
-        return $this->render('library/forums.html.twig', [
+        return $this->render('forum/index.html.twig', [
             'new_forum_form' => $form->createView(),
             'forums' => $forums
         ]);
     }
 
     /**
-     * @Route("/forum/{slug}", name="app_forum_display")
+     * @Route("/{slug}", name="app_forum_display")
      */
-    public function displayForum($slug)
+    public function displayForum(string $slug)
     {
         $repo = $this->getDoctrine()->getRepository(forum::class);
-        $forum = $repo->findAll();
+        $forum = $repo->findOneBy(['slug' => $slug]);
+        //dump($topic);
 
-        return $this->render('library/forum_display.html.twig', [
+        return $this->render('forum/forum_display.html.twig', [
             'forum' => $forum
         ]);
     }
