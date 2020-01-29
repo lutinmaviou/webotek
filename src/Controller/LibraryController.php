@@ -9,6 +9,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\AsciiSlugger;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class LibraryController extends AbstractController
 {
@@ -34,29 +36,26 @@ class LibraryController extends AbstractController
     }
 
     /**
-     * @Route("/forum", name="app_forum")
-     */
-    public function forum()
-    {
-        return $this->render('library/forum.html.twig');
-    }
-
-    /**
      * @Route("/forums", name="app_forums")
      */
-    public function createForum(EntityManagerInterface $em, Request $request)
+    public function createForum(EntityManagerInterface $em, Request $request, SluggerInterface $slugger)
     {
         $forum = new Forum();
         $form = $this->createForm(NewForumType::class, $forum);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $topic = $forum->getTopic();
+            // Convert to an Url format
+            $slugger = new AsciiSlugger('fr');
+            $slug = $slugger->slug($topic);
+            $forum->setSlug($slug);
             $forum->setCreationDate(new \DateTime());
             //$forum->setAuthor();
-            $data = $form->getData();
             $em->persist($data);
             $em->flush();
             $this->addFlash('success', 'Nouveau forum créé avec succès !');
-            return $this->redirectToRoute('app_forums');
+            //return $this->redirectToRoute('app_forums');
         }
         $repo = $this->getDoctrine()->getRepository(forum::class);
         $forums = $repo->findAll();
@@ -64,6 +63,19 @@ class LibraryController extends AbstractController
         return $this->render('library/forums.html.twig', [
             'new_forum_form' => $form->createView(),
             'forums' => $forums
+        ]);
+    }
+
+    /**
+     * @Route("/forum/{slug}", name="app_forum_display")
+     */
+    public function displayForum($slug)
+    {
+        $repo = $this->getDoctrine()->getRepository(forum::class);
+        $forum = $repo->findAll();
+
+        return $this->render('library/forum_display.html.twig', [
+            'forum' => $forum
         ]);
     }
 }

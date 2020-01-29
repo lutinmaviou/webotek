@@ -20,7 +20,9 @@
                     {% for forum in forums %}
 
                     <tr>
-                        <td><a href="#">{{ forum.topic }}</a></td>
+                        <td>
+                            <a href="{{ path('app_forum_display', {slug: forum.slug}) }}">{{ forum.topic }}</a>
+                        </td>
                         <td>{{ forums[0].creationDate | date('d/m/Y') }}</td>
                     </tr>
 
