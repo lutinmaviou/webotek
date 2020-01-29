@@ -67,7 +67,7 @@ class LibraryController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}", name="app_forum_display")
+     * @Route("/forum/{slug}", name="app_forum_display")
      */
     public function displayForum(string $slug)
     {
