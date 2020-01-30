@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<h1 id="forums-title">Forums</h1>
+<h1 class="forum-title">Forums</h1>
 
 <div class="container">
     <div class="row justify-content-center mt-5">
@@ -23,7 +23,7 @@
                         <td>
                             <a href="{{ path('app_forum_display', {slug: forum.slug}) }}">{{ forum.topic }}</a>
                         </td>
-                        <td>{{ forums[0].creationDate | date('d/m/Y') }}</td>
+                        <td>{{ forum.creationDate | date('d/m/Y') }}</td>
                     </tr>
 
                     {% endfor %}

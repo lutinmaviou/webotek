@@ -24,18 +24,6 @@ class LibraryController extends AbstractController
     }
 
     /**
-     * @Route("/books", name="books_list")
-     */
-    public function listBooks()
-    {
-        $repo = $this->getDoctrine()->getRepository(Book::class);
-        $books = $repo->findAll();
-        return $this->render('library/booksList.html.twig', [
-            'books' => $books
-        ]);
-    }
-
-    /**
      * @Route("/forums", name="app_forums")
      */
     public function createForum(EntityManagerInterface $em, Request $request, SluggerInterface $slugger)
@@ -75,7 +63,7 @@ class LibraryController extends AbstractController
         $forum = $repo->findOneBy(['slug' => $slug]);
         //dump($topic);
 
-        return $this->render('forum/forum_display.html.twig', [
+        return $this->render('forum/forum.html.twig', [
             'forum' => $forum
         ]);
     }
