@@ -53,7 +53,7 @@ class User implements UserInterface
     private $pseudo;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Forum", mappedBy="relation")
+     * @ORM\OneToMany(targetEntity="App\Entity\Forum", mappedBy="author")
      */
     private $forum;
 
