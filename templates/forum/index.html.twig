@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<div class="text-center forum-title">
+<div class="text-center forum-title pb-5">
     <h1>Liste des forums</h1>
 </div>
 
@@ -36,12 +36,13 @@
                 {{ knp_pagination_render(forums) }}
             </div>
 
-            <h2>Créer un nouveau forum</h2>
-
-            {{ form_start(new_forum_form) }}
-            {{ form_row(new_forum_form.topic, {'label': 'Sujet', 'value': ''}) }}
-            <button type="submit" class="btn btn-success">Valider</button>
-            {{ form_end(new_forum_form) }}
+            <div class="col-md-8 mx-auto mt-4 mb-5 text-center rounded shadow connect-card">
+                <h4 class="text-center mb-3">Créer un nouveau forum</h4>
+                {{ form_start(new_forum_form) }}
+                {{ form_row(new_forum_form.topic, {'label': 'Sujet', 'value': ''}) }}
+                <button type="submit" class="btn btn-success mt-2">Valider</button>
+                {{ form_end(new_forum_form) }}
+            </div>
         </div>
     </div>
 </div>

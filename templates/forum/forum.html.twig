@@ -5,7 +5,7 @@ Forum - webOtek - La grande bibliothèque en ligne
 {% endblock %}
 
 {% block body %}
-<h2 class="forum-title">Sujet de discussion : {{ forum.topic }}</h2>
+<h2 class="forum-title text-center pb-5">Sujet de discussion : {{ forum.topic }}</h2>
 <div class="container">
     <div class="row justify-content-center mt-5">
         <div class="col-sm-10">
@@ -33,11 +33,11 @@ Forum - webOtek - La grande bibliothèque en ligne
             </div>
 
             {% if app.user %}
-            <div class="col-md-8 mx-auto">
-                <h3 class="text-center">Participer à la discussion</h3>
+            <div class="col-md-8 mx-auto mt-4 mb-5 text-center rounded shadow connect-card">
+                <h4 class="text-center mb-3 text-primary">Participer à la discussion</h4>
                 {{ form_start(comment_form) }}
-                {{ form_row(comment_form.content, {'label': 'Message'}) }}
-                <button type="submit" class="btn btn-success">Valider</button>
+                {{ form_row(comment_form.content, {'label': 'Message', 'value': ''}) }}
+                <button type="submit" class="btn btn-success mt-2">Valider</button>
                 {{ form_end(comment_form) }}
             </div>
             {% else %}

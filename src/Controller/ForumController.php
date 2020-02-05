@@ -82,7 +82,10 @@ class ForumController extends AbstractController
             $em->flush();
             $this->addFlash('success', 'Votre commentaire à été ajouté !');
         }
-        $query = $this->getDoctrine()->getRepository(Comment::class)->findBy(['forum' => $forumId]);
+        $query = $this->getDoctrine()->getRepository(Comment::class)->findBy(
+            ['forum' => $forumId],
+            ['creationDate' => 'DESC']
+        );
         $comments = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1), /*page number*/

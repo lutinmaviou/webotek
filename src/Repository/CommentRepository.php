@@ -47,4 +47,9 @@ class CommentRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findComments()
+    {
+        return $this->findBy(array(), ['creationDate' => 'DESC']);
+    }
 }
