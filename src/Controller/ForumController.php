@@ -12,14 +12,15 @@ use App\Entity\Comment;
 use App\Form\NewCommentType;
 use App\Form\NewForumType;
 use Doctrine\ORM\EntityManagerInterface;
-
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use Knp\Component\Pager\PaginatorInterface;
 
 class ForumController extends AbstractController
 {
     /**
      * @Route("/forums", name="app_forums")
      */
-    public function addForum(EntityManagerInterface $em, Request $request, SluggerInterface $slugger)
+    public function addForum(EntityManagerInterface $em, Request $request, SluggerInterface $slugger, PaginatorInterface $paginator)
     {
         $forum = new Forum();
         $form = $this->createForm(NewForumType::class, $forum);
@@ -38,8 +39,13 @@ class ForumController extends AbstractController
             $this->addFlash('success', 'Nouveau forum créé avec succès !');
             //return $this->redirectToRoute('app_forums');
         }
-        $repo = $this->getDoctrine()->getRepository(forum::class);
-        $forums = $repo->findAll();
+        $query = $this->getDoctrine()->getRepository(forum::class)->findAll();
+        $forums = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1), /*page number*/
+            5 /*limit per page*/
+
+        );
 
         return $this->render('forum/index.html.twig', [
             'new_forum_form' => $form->createView(),

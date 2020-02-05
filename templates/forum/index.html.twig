@@ -31,6 +31,10 @@
                 </tbody>
             </table>
 
+            <div class="pagination">
+                {{ knp_pagination_render(forums) }}
+            </div>
+
             <h2>Créer un nouveau forum</h2>
 
             {{ form_start(new_forum_form) }}
