@@ -98,9 +98,4 @@ class ForumController extends AbstractController
             'comment_form' => $form->createView()
         ]);
     }
-
-    public function reportMessage()
-    {
-        $forum = $this->getDoctrine()->getRepository(Forum::class);
-    }
 }
