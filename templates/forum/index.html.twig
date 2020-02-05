@@ -1,8 +1,9 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-
-<h1 class="forum-title">Forums</h1>
+<div class="text-center forum-title">
+    <h1>Liste des forums</h1>
+</div>
 
 <div class="container">
     <div class="row justify-content-center mt-5">
@@ -11,9 +12,9 @@
             <table class="table table-striped">
                 <thead class="thead-dark">
                     <tr>
-                        <th scope="col">SUJETS</th>
-                        {#<th scope="col">AUTHEUR</th>#}
-                        <th scope="col">Date de création</th>
+                        <th scope="col" class="text-center">SUJETS</th>
+                        {#<th scope="col">AUTEUR</th>#}
+                        <th scope="col" class="text-center">Date de création</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,7 +24,7 @@
                         <td>
                             <a href="{{ path('app_forum_display', {slug: forum.slug}) }}">{{ forum.topic }}</a>
                         </td>
-                        <td>{{ forum.creationDate | date('d/m/Y') }}</td>
+                        <td class="text-center">{{ forum.creationDate | date('d/m/Y') }}</td>
                     </tr>
 
                     {% endfor %}
@@ -31,7 +32,7 @@
                 </tbody>
             </table>
 
-            <div class="pagination">
+            <div class="pagination justify-content-center mt-4 mb-5">
                 {{ knp_pagination_render(forums) }}
             </div>
 

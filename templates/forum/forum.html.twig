@@ -27,6 +27,11 @@ Forum - webOtek - La grande bibliothèque en ligne
             </table>
 
             {% endfor %}
+
+            <div class="pagination justify-content-center mt-4 mb-5">
+                {{ knp_pagination_render(comments) }}
+            </div>
+
             <div class="col-md-8 mx-auto">
                 <h3 class="text-center">Participer à la discussion</h3>
                 {{ form_start(comment_form) }}

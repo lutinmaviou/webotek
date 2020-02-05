@@ -34,8 +34,8 @@ class ForumController extends AbstractController
             $forum->setSlug($slug);
             $forum->setCreationDate(new \DateTime());
             //$forum->setAuthor();
-            //$em->persist($data);
-            //$em->flush();
+            $em->persist($data);
+            $em->flush();
             $this->addFlash('success', 'Nouveau forum créé avec succès !');
             //return $this->redirectToRoute('app_forums');
         }
@@ -43,7 +43,7 @@ class ForumController extends AbstractController
         $forums = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1), /*page number*/
-            5 /*limit per page*/
+            8 /*limit per page*/
 
         );
 
@@ -56,7 +56,7 @@ class ForumController extends AbstractController
     /**
      * @Route("/forum/{slug}", name="app_forum_display")
      */
-    public function showForum(string $slug, EntityManagerInterface $em, Request $request)
+    public function showForum(string $slug, EntityManagerInterface $em, Request $request, PaginatorInterface $paginator)
     {
 
         $forumRepo = $this->getDoctrine()->getRepository(forum::class);
@@ -79,9 +79,13 @@ class ForumController extends AbstractController
             $em->flush();
             $this->addFlash('success', 'Votre commentaire à été ajouté !');
         }
-        $repo = $this->getDoctrine()->getRepository(Comment::class);
-        $comments = $repo->findBy(['forum' => $forumId]);
-        dump($comments);
+        $query = $this->getDoctrine()->getRepository(Comment::class)->findBy(['forum' => $forumId]);
+        $comments = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1), /*page number*/
+            5 /*limit per page*/
+
+        );
         return $this->render('forum/forum.html.twig', [
             'comments' => $comments,
             'forum' => $forum,
