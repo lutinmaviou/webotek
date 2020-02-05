@@ -32,6 +32,7 @@ Forum - webOtek - La grande bibliothèque en ligne
                 {{ knp_pagination_render(comments) }}
             </div>
 
+            {% if app.user %}
             <div class="col-md-8 mx-auto">
                 <h3 class="text-center">Participer à la discussion</h3>
                 {{ form_start(comment_form) }}
@@ -39,6 +40,17 @@ Forum - webOtek - La grande bibliothèque en ligne
                 <button type="submit" class="btn btn-success">Valider</button>
                 {{ form_end(comment_form) }}
             </div>
+            {% else %}
+            <div class="col-md-8 mx-auto mt-4 mb-5 text-center rounded shadow connect-card">
+                <p class="pt-2">Veulliez vous connecter pour participer à la discussion</p>
+                <div class="pt-4">
+                    <p class="links-color"><a href="{{ path('app_login') }}">Se connecter <i
+                                class="fas fa-sign-in-alt"></i></a></p>
+                    <p class="links-color"><a href="{{ path('app_sign_in') }}">S'inscrire <i
+                                class="fas fa-sign-in-alt"></i></a></p>
+                </div>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>

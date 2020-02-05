@@ -14,6 +14,7 @@ use App\Form\NewForumType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ForumController extends AbstractController
 {
@@ -56,7 +57,7 @@ class ForumController extends AbstractController
     /**
      * @Route("/forum/{slug}", name="app_forum_display")
      */
-    public function showForum(string $slug, EntityManagerInterface $em, Request $request, PaginatorInterface $paginator)
+    public function showForum(string $slug, EntityManagerInterface $em, Request $request, SessionInterface $session, PaginatorInterface $paginator)
     {
 
         $forumRepo = $this->getDoctrine()->getRepository(forum::class);
@@ -67,8 +68,10 @@ class ForumController extends AbstractController
         $comment = new Comment();
         $form = $this->createForm(NewCommentType::class, $comment);
         $form->handleRequest($request);
-        // Get the pseudo of the connected user
-        $userPseudo = $this->getUser()->getPseudo();
+        if ($this->getUser()) {
+            // Get the pseudo of the connected user
+            $userPseudo = $this->getUser()->getPseudo();
+        }
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $comment->setCreationDate(new \DateTime());

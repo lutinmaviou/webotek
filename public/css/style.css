@@ -24,6 +24,15 @@
     width: 20%;
 }
 
+.connect-card {
+    background-color: rgb(209, 209, 209);
+    padding: 1rem;
+}
+
+.links-color a {
+    color: #046ddd;
+}
+
 @media screen and (max-width: 500px) {
     #message-flash {
         margin-bottom: -5rem !important;
