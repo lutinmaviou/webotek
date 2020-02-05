@@ -17,11 +17,6 @@ class Comment
     private $id;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $bookId;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $author;
@@ -49,18 +44,6 @@ class Comment
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getBookId(): ?int
-    {
-        return $this->bookId;
-    }
-
-    public function setBookId(?int $bookId): self
-    {
-        $this->bookId = $bookId;
-
-        return $this;
     }
 
     public function getAuthor(): ?string

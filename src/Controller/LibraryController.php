@@ -9,7 +9,7 @@ class LibraryController extends AbstractController
 {
 
     /**
-     * @Route("/", name="app_home")
+     * @Route("/", name="home")
      */
     public function home()
     {

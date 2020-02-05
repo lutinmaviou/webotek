@@ -28,8 +28,8 @@ class RegisterController extends AbstractController
             //$user->getPassword();
             $data = $form->getData();
             dump($data);
-            //$em->persist($data);
-            //$em->flush();
+            $em->persist($data);
+            $em->flush();
             $this->addFlash('success', 'Votre compte à bien été enregistré !');
             return $this->redirectToRoute('app_login');
         }

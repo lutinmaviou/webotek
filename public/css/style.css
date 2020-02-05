@@ -8,6 +8,7 @@
 
 #hello {
     color: rgb(238, 238, 238);
+    width: 60%;
 }
 
 #message-flash {
@@ -19,6 +20,9 @@
     margin-top: 8rem;
 }
 
+#report {
+    width: 20%;
+}
 
 @media screen and (max-width: 500px) {
     #message-flash {

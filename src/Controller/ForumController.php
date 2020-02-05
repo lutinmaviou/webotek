@@ -8,6 +8,8 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Forum;
+use App\Entity\Comment;
+use App\Form\NewCommentType;
 use App\Form\NewForumType;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -17,7 +19,7 @@ class ForumController extends AbstractController
     /**
      * @Route("/forums", name="app_forums")
      */
-    public function createForum(EntityManagerInterface $em, Request $request, SluggerInterface $slugger)
+    public function addForum(EntityManagerInterface $em, Request $request, SluggerInterface $slugger)
     {
         $forum = new Forum();
         $form = $this->createForm(NewForumType::class, $forum);
@@ -31,8 +33,8 @@ class ForumController extends AbstractController
             $forum->setSlug($slug);
             $forum->setCreationDate(new \DateTime());
             //$forum->setAuthor();
-            $em->persist($data);
-            $em->flush();
+            //$em->persist($data);
+            //$em->flush();
             $this->addFlash('success', 'Nouveau forum créé avec succès !');
             //return $this->redirectToRoute('app_forums');
         }
@@ -48,14 +50,41 @@ class ForumController extends AbstractController
     /**
      * @Route("/forum/{slug}", name="app_forum_display")
      */
-    public function displayForum(string $slug)
+    public function showForum(string $slug, EntityManagerInterface $em, Request $request)
     {
-        $repo = $this->getDoctrine()->getRepository(forum::class);
-        $forum = $repo->findOneBy(['slug' => $slug]);
-        //dump($topic);
 
+        $forumRepo = $this->getDoctrine()->getRepository(forum::class);
+        $forum = $forumRepo->findOneBy(['slug' => $slug]);
+        $forumId = $forum->getId();
+        dump($forumId);
+
+        $comment = new Comment();
+        $form = $this->createForm(NewCommentType::class, $comment);
+        $form->handleRequest($request);
+        // Get the pseudo of the connected user
+        $userPseudo = $this->getUser()->getPseudo();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $comment->setCreationDate(new \DateTime());
+            $comment->setAuthor($userPseudo);
+            $comment->setStatus(0);
+            $comment->setForum($forum);
+            $em->persist($data);
+            $em->flush();
+            $this->addFlash('success', 'Votre commentaire à été ajouté !');
+        }
+        $repo = $this->getDoctrine()->getRepository(Comment::class);
+        $comments = $repo->findBy(['forum' => $forumId]);
+        dump($comments);
         return $this->render('forum/forum.html.twig', [
-            'forum' => $forum
+            'comments' => $comments,
+            'forum' => $forum,
+            'comment_form' => $form->createView()
         ]);
+    }
+
+    public function reportMessage()
+    {
+        $forum = $this->getDoctrine()->getRepository(Forum::class);
     }
 }

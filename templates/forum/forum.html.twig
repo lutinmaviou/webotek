@@ -6,28 +6,35 @@ Forum - webOtek - La grande bibliothèque en ligne
 
 {% block body %}
 <h2 class="forum-title">Sujet de discussion : {{ forum.topic }}</h2>
-
 <div class="container">
     <div class="row justify-content-center mt-5">
         <div class="col-sm-10">
+            {% for comment in comments %}
             <table class="table table-bordered">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col">lutinmaviou <em class="ml-2">le 27/01/2020</em></th>
-                        <th scope="col" class="text-center"><a href="#" class="text-danger">Signaler</a></th>
+                        <th scope="col">{{ comment.author }}<em class="ml-2">le
+                                {{ comment.creationDate | date('d/m/Y à H:m:s') }}</em></th>
+                        <th scope="col" class="text-center" id="report"><a href="#" class="text-danger">Signaler</a>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td colspan="2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae delectus
-                            temporibus labore
-                            cumque. Voluptatum ea tenetur quia exercitationem laborum. Perferendis ut pariatur maxime
-                            nihil nulla aliquid quasi officiis porro aperiam?</td>
+                        <td colspan="2">{{ comment.content }}</td>
                     </tr>
                 </tbody>
             </table>
+
+            {% endfor %}
+            <div class="col-md-8 mx-auto">
+                <h3 class="text-center">Participer à la discussion</h3>
+                {{ form_start(comment_form) }}
+                {{ form_row(comment_form.content, {'label': 'Message'}) }}
+                <button type="submit" class="btn btn-success">Valider</button>
+                {{ form_end(comment_form) }}
+            </div>
         </div>
     </div>
 </div>
-
 {% endblock %}
