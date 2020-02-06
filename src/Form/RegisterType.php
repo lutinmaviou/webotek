@@ -15,7 +15,6 @@ class RegisterType extends AbstractType
             ->add('firstName')
             ->add('lastName')
             ->add('pseudo')
-            //->add('role')
             ->add('email')
             ->add('password');
     }

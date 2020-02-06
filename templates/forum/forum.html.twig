@@ -12,6 +12,7 @@ Forum - webOtek - La grande bibliothèque en ligne
 <div class="container">
     <div class="row justify-content-center mt-5">
         <div class="col-sm-10">
+
             {% for comment in comments %}
             <table class="table table-bordered">
                 <thead class="thead-light">
@@ -19,15 +20,14 @@ Forum - webOtek - La grande bibliothèque en ligne
                         <th scope="col">{{ comment.author }}<em class="ml-2">le
                                 {{ comment.creationDate | date('d/m/Y à H:m:s') }}</em></th>
                         {% if is_granted('ROLE_ADMIN') %}
-                        <th scope="col" class="text-center" id="delete"><a href="{{ path('app_message_delete') }}"
-                                class="text-danger">Supprimer</a>
+                        <th scope="col" class="text-center" id="delete"><a href="" class="text-danger">Supprimer</a>
                         </th>
                         {% endif %}
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td colspan="2">{{ comment.content }}</td>
+                        <td colspan="2">{{ comment.content | nl2br }}</td>
                     </tr>
                 </tbody>
             </table>

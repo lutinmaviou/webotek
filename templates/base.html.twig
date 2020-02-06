@@ -33,7 +33,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
         <div class="container">
-            <a class="navbar-brand js-scroll-trigger" href="{{ path('home') }}">
+            <a class="navbar-brand js-scroll-trigger" href="{{ path('app_home') }}">
                 <h1 id="main-title">webOtek</h1>
             </a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
@@ -52,14 +52,14 @@
                         <a class="nav-link js-scroll-trigger" href="{{ path('app_sign_in') }}">Inscription</a>
                     </li>
                     {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="{{ path('app_forums') }}">Forums</a>
+                    </li>
                     {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger" href="{{ path('app_logout') }}">Déconnexion</a>
                     </li>
                     {% endif %}
-                    <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="{{ path('app_forums') }}">Forums</a>
-                    </li>
                 </ul>
             </div>
         </div>

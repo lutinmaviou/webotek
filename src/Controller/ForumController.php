@@ -36,7 +36,9 @@ class ForumController extends AbstractController
             $em->persist($data);
             $em->flush();
             $this->addFlash('success', 'Nouveau forum créé avec succès !');
-            //return $this->redirectToRoute('app_forums');
+            return $this->redirectToRoute('app_forum_display', [
+                'slug' => $forum->getSlug()
+            ]);
         }
         $query = $this->getDoctrine()->getRepository(forum::class)->findAll();
         $forums = $paginator->paginate(
@@ -57,11 +59,9 @@ class ForumController extends AbstractController
      */
     public function showForum(string $slug, EntityManagerInterface $em, Request $request, PaginatorInterface $paginator)
     {
-
         $forumRepo = $this->getDoctrine()->getRepository(forum::class);
         $forum = $forumRepo->findOneBy(['slug' => $slug]);
         $forumId = $forum->getId();
-        dump($forumId);
 
         $comment = new Comment();
         $form = $this->createForm(NewCommentType::class, $comment);
@@ -84,6 +84,7 @@ class ForumController extends AbstractController
             ['forum' => $forumId],
             ['creationDate' => 'DESC']
         );
+
         $comments = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1), /*page number*/
@@ -95,16 +96,5 @@ class ForumController extends AbstractController
             'forum' => $forum,
             'comment_form' => $form->createView()
         ]);
-    }
-
-    /**
-     * @Route("/message/", name="app_message_delete")
-     */
-    public function removeComment()
-    {
-        $query = $this->getDoctrine()->getRepository(Comment::class);
-        $message = $query->findAll();
-        $messageId = $message->getId();
-        dump($messageId);
     }
 }
