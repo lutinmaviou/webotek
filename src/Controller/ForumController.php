@@ -12,9 +12,7 @@ use App\Entity\Comment;
 use App\Form\NewCommentType;
 use App\Form\NewForumType;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ForumController extends AbstractController
 {
@@ -57,7 +55,7 @@ class ForumController extends AbstractController
     /**
      * @Route("/forum/{slug}", name="app_forum_display")
      */
-    public function showForum(string $slug, EntityManagerInterface $em, Request $request, SessionInterface $session, PaginatorInterface $paginator)
+    public function showForum(string $slug, EntityManagerInterface $em, Request $request, PaginatorInterface $paginator)
     {
 
         $forumRepo = $this->getDoctrine()->getRepository(forum::class);
@@ -97,5 +95,16 @@ class ForumController extends AbstractController
             'forum' => $forum,
             'comment_form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/message/", name="app_message_delete")
+     */
+    public function removeComment()
+    {
+        $query = $this->getDoctrine()->getRepository(Comment::class);
+        $message = $query->findAll();
+        $messageId = $message->getId();
+        dump($messageId);
     }
 }

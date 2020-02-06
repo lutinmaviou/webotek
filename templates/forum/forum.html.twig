@@ -5,7 +5,10 @@ Forum - webOtek - La grande bibliothèque en ligne
 {% endblock %}
 
 {% block body %}
-<h2 class="forum-title text-center pb-5">Sujet de discussion : {{ forum.topic }}</h2>
+<div class="forum-title text-center pb-2">
+    <h2>Sujet de discussion : </h2>
+    <h3 class="mt-4 text-primary">{{ forum.topic }}</h3>
+</div class="forum-title text-center pb-5">
 <div class="container">
     <div class="row justify-content-center mt-5">
         <div class="col-sm-10">
@@ -15,8 +18,11 @@ Forum - webOtek - La grande bibliothèque en ligne
                     <tr>
                         <th scope="col">{{ comment.author }}<em class="ml-2">le
                                 {{ comment.creationDate | date('d/m/Y à H:m:s') }}</em></th>
-                        <th scope="col" class="text-center" id="report"><a href="#" class="text-danger">Signaler</a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <th scope="col" class="text-center" id="delete"><a href="{{ path('app_message_delete') }}"
+                                class="text-danger">Supprimer</a>
                         </th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -42,7 +48,7 @@ Forum - webOtek - La grande bibliothèque en ligne
             </div>
             {% else %}
             <div class="col-md-8 mx-auto mt-4 mb-5 text-center rounded shadow connect-card">
-                <p class="pt-2">Veulliez vous connecter pour participer à la discussion</p>
+                <p class="pt-2">Veuillez vous connecter pour participer à la discussion</p>
                 <div class="pt-4">
                     <p class="links-color"><a href="{{ path('app_login') }}">Se connecter <i
                                 class="fas fa-sign-in-alt"></i></a></p>
