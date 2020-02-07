@@ -39,7 +39,7 @@ class Forum
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="forum")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="forum", cascade={"remove"})
      */
     private $comments;
 
@@ -104,9 +104,9 @@ class Forum
     /**
      * @return Collection|Comment[]
      */
-    public function getComments(): Collection
+    public function getComments()
     {
-        return $this->comments;
+        return $this->comments->getValues();
     }
 
     public function addComment(Comment $comment): self
@@ -130,5 +130,10 @@ class Forum
         }
 
         return $this;
+    }
+
+    public function getCurrentComment()
+    {
+        return $this->comments->current();
     }
 }

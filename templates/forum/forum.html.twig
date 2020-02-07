@@ -19,10 +19,6 @@ Forum - webOtek - La grande bibliothèque en ligne
                     <tr>
                         <th scope="col">{{ comment.author }}<em class="ml-2">le
                                 {{ comment.creationDate | date('d/m/Y à H:m:s') }}</em></th>
-                        {% if is_granted('ROLE_ADMIN') %}
-                        <th scope="col" class="text-center" id="delete"><a href="" class="text-danger">Supprimer</a>
-                        </th>
-                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>

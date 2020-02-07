@@ -11,6 +11,7 @@ use App\Entity\Forum;
 use App\Entity\Comment;
 use App\Form\NewCommentType;
 use App\Form\NewForumType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -27,12 +28,11 @@ class ForumController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $topic = $forum->getTopic();
-            // Convert to an Url format
+            // Convert to an url format
             $slugger = new AsciiSlugger('fr');
             $slug = $slugger->slug($topic);
-            $forum->setSlug($slug);
+            $forum->setSlug(strtolower($slug));
             $forum->setCreationDate(new \DateTime());
-            //$forum->setAuthor();
             $em->persist($data);
             $em->flush();
             $this->addFlash('success', 'Nouveau forum créé avec succès !');
@@ -40,6 +40,7 @@ class ForumController extends AbstractController
                 'slug' => $forum->getSlug()
             ]);
         }
+
         $query = $this->getDoctrine()->getRepository(forum::class)->findAll();
         $forums = $paginator->paginate(
             $query,
@@ -55,11 +56,11 @@ class ForumController extends AbstractController
     }
 
     /**
-     * @Route("/forum/{slug}", name="app_forum_display")
+     * @Route("/forum/{slug}", name="app_forum_display", methods="GET|POST")
      */
     public function showForum(string $slug, EntityManagerInterface $em, Request $request, PaginatorInterface $paginator)
     {
-        $forumRepo = $this->getDoctrine()->getRepository(forum::class);
+        $forumRepo = $this->getDoctrine()->getRepository(Forum::class);
         $forum = $forumRepo->findOneBy(['slug' => $slug]);
         $forumId = $forum->getId();
 
@@ -80,13 +81,14 @@ class ForumController extends AbstractController
             $em->flush();
             $this->addFlash('success', 'Votre commentaire à été ajouté !');
         }
-        $query = $this->getDoctrine()->getRepository(Comment::class)->findBy(
+        $query = $this->getDoctrine()->getRepository(Comment::class);
+        $messages = $query->findBy(
             ['forum' => $forumId],
             ['creationDate' => 'DESC']
         );
 
         $comments = $paginator->paginate(
-            $query,
+            $messages,
             $request->query->getInt('page', 1), /*page number*/
             5 /*limit per page*/
 
@@ -94,7 +96,7 @@ class ForumController extends AbstractController
         return $this->render('forum/forum.html.twig', [
             'comments' => $comments,
             'forum' => $forum,
-            'comment_form' => $form->createView()
+            'comment_form' => $form->createView(),
         ]);
     }
 }
