@@ -79,7 +79,7 @@ class ForumController extends AbstractController
             $comment->setForum($forum);
             $em->persist($data);
             $em->flush();
-            $this->addFlash('success', 'Votre commentaire à été ajouté !');
+            $this->addFlash('success', 'Votre commentaire à bien été ajouté !');
         }
         $query = $this->getDoctrine()->getRepository(Comment::class);
         $messages = $query->findBy(
