@@ -1,7 +1,11 @@
 {% extends "base.html.twig" %}
 
 {% block title %}
-Forum - webOtek - La grande bibliothèque en ligne
+{{ forum.topic }} - webOtek - La grande bibliothèque en ligne
+{% endblock %}
+
+{% block description %}
+webOtek - La grande bibliothèque en ligne. Forum ouvert sur le sujet de discussion : {{ forum.topic }}.
 {% endblock %}
 
 {% block body %}

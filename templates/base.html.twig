@@ -4,8 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="{% block description %}{% endblock %}">
+    <meta name="author" content="Bertrand Bourion">
+    <meta name="keywords" content="Librairie, bibliothèque, forum, discussion" />
+    <!-- OPEN GRAPHS -->
+    <meta property="og:title" content="webOtek - La grande bibliothèque en ligne" />
+    <meta property="og:type" content="Librairie" />
+    <meta property="og:url" content="http://www.webotek.yourwebangency.fr">
+    <!-- TWITTER CARDS -->
+    <meta name="twitter:card" content="summary" />
+    <meta name=”twitter:site” content="http://www.webotek.yourwebagency.fr" />
+    <meta name="twitter:title" content="Librairie" />
+    <meta name="twitter:description" content="webOtek - La grande bibliothèque en ligne" />
+
     <title>
         {% block title %}{% endblock %}
     </title>
