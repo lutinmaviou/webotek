@@ -1,65 +1,80 @@
 {% extends "base.html.twig" %}
 
 {% block title %}
-{{ forum.topic }} - webOtek - La grande bibliothèque en ligne
+	{{ forum.topic }}
+	- webOtek - La grande bibliothèque en ligne
 {% endblock %}
 
 {% block description %}
-webOtek - La grande bibliothèque en ligne. Forum ouvert sur le sujet de discussion : {{ forum.topic }}.
+	webOtek - La grande bibliothèque en ligne. Forum ouvert sur le sujet de discussion :
+	{{ forum.topic }}.
 {% endblock %}
 
 {% block body %}
-<div class="forum-title text-center pb-2">
-    <h2>Sujet de discussion : </h2>
-    <h3 class="mt-4 text-primary">{{ forum.topic }}</h3>
-</div class="forum-title text-center pb-5">
-<div class="container">
-    <div class="row justify-content-center mt-5">
-        <div class="col-sm-10">
+	<div class="forum-title text-center pb-2">
+		<h2>Sujet de discussion :
+		</h2>
+		<h3 class="mt-4 text-primary">{{ forum.topic }}</h3>
+	</div>
+	<div class="container">
+		<div class="row justify-content-center mt-5">
+			<div class="col-sm-10">
 
-            {% for comment in comments %}
-            <table class="table table-bordered">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">{{ comment.author }}<em class="ml-2">le
-                                {{ comment.creationDate | date('d/m/Y à H:m:s') }}</em></th>
-                        <th id="delete"><a class="btn btn-danger" href="{{ path('app_forum_remove_comment', 
-                            {slug: forum.slug, commentId: comment.id}) }}">Supprimer</a></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="2">{{ comment.content | nl2br }}</td>
-                    </tr>
-                </tbody>
-            </table>
+				{% for comment in comments %}
+					<table class="table table-bordered">
+						<thead class="thead-light">
+							<tr>
+								<th scope="col">{{ comment.author }}<em class="ml-2">le
+										{{ comment.creationDate | date('d/m/Y à H:m:s') }}</em>
+								</th>
+								<th id="delete" class="text-center">
+									<form method="POST" action="{{ path('app_forum_remove_comment', {slug: forum.slug, commentId: comment.id}) }}" onsubmit="return('Confirmer ?')">
+										<input type="hidden" name="_method" value="DELETE">
+										<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+										<button class="btn btn-danger">Supprimer</button>
+									</form>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td colspan="2">{{ comment.content | nl2br }}</td>
+							</tr>
+						</tbody>
+					</table>
 
-            {% endfor %}
+				{% endfor %}
 
-            <div class="pagination justify-content-center mt-4 mb-5">
-                {{ knp_pagination_render(comments) }}
-            </div>
+				<div class="pagination justify-content-center mt-4 mb-5">
+					{{ knp_pagination_render(comments) }}
+				</div>
 
-            {% if app.user %}
-            <div class="col-md-8 mx-auto mt-4 mb-5 text-center rounded shadow connect-card">
-                <h4 class="text-center mb-3 text-primary">Participer à la discussion</h4>
-                {{ form_start(comment_form) }}
-                {{ form_row(comment_form.content, {'label': 'Message', 'value': ''}) }}
-                <button type="submit" class="btn btn-success mt-2">Valider</button>
-                {{ form_end(comment_form) }}
-            </div>
-            {% else %}
-            <div class="col-md-8 mx-auto mt-4 mb-5 text-center rounded shadow connect-card">
-                <p class="pt-2">Veuillez vous connecter pour participer à la discussion</p>
-                <div class="pt-4">
-                    <p class="links-color"><a href="{{ path('app_login') }}">Se connecter <i
-                                class="fas fa-sign-in-alt"></i></a></p>
-                    <p class="links-color"><a href="{{ path('app_sign_in') }}">S'inscrire <i
-                                class="fas fa-sign-in-alt"></i></a></p>
-                </div>
-            </div>
-            {% endif %}
-        </div>
-    </div>
-</div>
+				{% if app.user %}
+					<div class="col-md-8 mx-auto mt-4 mb-5 text-center rounded shadow connect-card">
+						<h4 class="text-center mb-3 text-primary">Participer à la discussion</h4>
+						{{ form_start(comment_form) }}
+						{{ form_row(comment_form.content, {'label': 'Message', 'value': ''}) }}
+						<button type="submit" class="btn btn-success mt-2">Valider</button>
+						{{ form_end(comment_form) }}
+					</div>
+				{% else %}
+					<div class="col-md-8 mx-auto mt-4 mb-5 text-center rounded shadow connect-card">
+						<p class="pt-2">Veuillez vous connecter pour participer à la discussion</p>
+						<div class="pt-4">
+							<p class="links-color">
+								<a href="{{ path('app_login') }}">Se connecter
+									<i class="fas fa-sign-in-alt"></i>
+								</a>
+							</p>
+							<p class="links-color">
+								<a href="{{ path('app_sign_in') }}">S'inscrire
+									<i class="fas fa-sign-in-alt"></i>
+								</a>
+							</p>
+						</div>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
 {% endblock %}
