@@ -29,10 +29,6 @@ class App {
         new AjaxGet(this.url);
     }
 
-    // Find books by Author
-
-
-
     // Find books with the select element of categories
 
     searchCatBySelect() {

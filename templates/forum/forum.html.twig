@@ -23,6 +23,8 @@ webOtek - La grande bibliothèque en ligne. Forum ouvert sur le sujet de discuss
                     <tr>
                         <th scope="col">{{ comment.author }}<em class="ml-2">le
                                 {{ comment.creationDate | date('d/m/Y à H:m:s') }}</em></th>
+                        <th id="delete"><a class="btn btn-danger" href="{{ path('app_forum_remove_comment', 
+                            {slug: forum.slug, commentId: comment.id}) }}">Supprimer</a></th>
                     </tr>
                 </thead>
                 <tbody>

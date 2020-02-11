@@ -26,14 +26,13 @@ class ForumController extends AbstractController
         $form = $this->createForm(NewForumType::class, $forum);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
             $topic = $forum->getTopic();
             // Convert to an url format
             $slugger = new AsciiSlugger('fr');
             $slug = $slugger->slug($topic);
             $forum->setSlug(strtolower($slug));
             $forum->setCreationDate(new \DateTime());
-            $em->persist($data);
+            $em->persist($forum);
             $em->flush();
             $this->addFlash('success', 'Nouveau forum créé avec succès !');
             return $this->redirectToRoute('app_forum_display', [
@@ -48,7 +47,6 @@ class ForumController extends AbstractController
             8 /*limit per page*/
 
         );
-
         return $this->render('forum/index.html.twig', [
             'new_forum_form' => $form->createView(),
             'forums' => $forums
@@ -97,6 +95,20 @@ class ForumController extends AbstractController
             'comments' => $comments,
             'forum' => $forum,
             'comment_form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/forum/delete/{slug}/{commentId}", name="app_forum_remove_comment")
+     */
+    public function removeComment(int $commentId, string $slug, EntityManagerInterface $em)
+    {
+        $comment = $this->getDoctrine()->getRepository(Comment::class)->find($commentId);
+        dump($comment);
+        $em->remove($comment);
+        $em->flush();
+        return $this->redirectToRoute('app_forum_display', [
+            'slug' => $slug,
         ]);
     }
 }
