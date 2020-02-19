@@ -18,19 +18,27 @@ class ForumController extends AbstractController
     /**
      * @Route("/forums", name="app_forums")
      */
-    public function addForum(ForumGateway $forumGateway, Request $request)
+    public function addForum(ForumGateway $forumGateway, Request $request, PaginatorInterface $paginator)
     {
         $form = $this->createForm(NewForumType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $forumGateway->save($form->getData());
             $this->addFlash('success', 'Nouveau forum créé avec succès !');
+
             return $this->redirectToRoute('app_forum_display', [
                 'slug' => $form->getData()->getSlug()
             ]);
         }
 
-        $forums = $forumGateway->paginatedListForums($request->query->getInt('page', 1));
+        // $forums = $forumGateway->paginatedListForums($request->query->getInt('page', 1));
+
+        $query = $this->getDoctrine()->getRepository(forum::class)->findAll();
+        $forums = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1), /*page number*/
+            5 /*limit per page*/
+        );
 
         return $this->render('forum/index.html.twig', [
             'new_forum_form' => $form->createView(),
@@ -70,13 +78,11 @@ class ForumController extends AbstractController
             ['forum' => $forumId],
             ['creationDate' => 'DESC']
         );
-        dump($messages);
         $comments = $paginator->paginate(
             $messages,
             $request->query->getInt('page', 1), /*page number*/
             5 /*limit per page*/
         );
-        dump($comments);
 
         return $this->render('forum/forum.html.twig', [
             'comments' => $comments,
