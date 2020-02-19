@@ -18,9 +18,8 @@ class ForumGateway
      */
     private $paginator;
 
-
     /**
-     *  @var ForumRepository
+     * @var ForumRepository
      */
     private $forumRepository;
 

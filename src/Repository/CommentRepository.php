@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Comment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
 
 /**
  * @method Comment|null find($id, $lockMode = null, $lockVersion = null)
@@ -47,6 +48,18 @@ class CommentRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @return Query
+     */
+    public function findAllByForum($forumId)
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.forum = ' . $forumId . '')
+            ->orderBy('c.creationDate', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 
     public function findComments()
     {

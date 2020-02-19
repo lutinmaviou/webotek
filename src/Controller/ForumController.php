@@ -9,7 +9,10 @@ use App\Entity\Forum;
 use App\Entity\Comment;
 use App\Form\NewCommentType;
 use App\Form\NewForumType;
+use App\Gateway\CommentGateway;
 use App\Gateway\ForumGateway;
+use App\Repository\CommentRepository;
+use App\Repository\ForumRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -18,8 +21,12 @@ class ForumController extends AbstractController
     /**
      * @Route("/forums", name="app_forums")
      */
-    public function addForum(ForumGateway $forumGateway, Request $request, PaginatorInterface $paginator)
-    {
+    public function addForum(
+        ForumGateway $forumGateway,
+        Request $request,
+        PaginatorInterface $paginator,
+        ForumRepository $forumRepo
+    ) {
         $form = $this->createForm(NewForumType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -33,7 +40,7 @@ class ForumController extends AbstractController
 
         // $forums = $forumGateway->paginatedListForums($request->query->getInt('page', 1));
 
-        $query = $this->getDoctrine()->getRepository(forum::class)->findAll();
+        $query = $forumRepo->findAllQuery();
         $forums = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
@@ -49,8 +56,14 @@ class ForumController extends AbstractController
     /**
      * @Route("/forum/{slug}", name="app_forum_display", methods="GET|POST")
      */
-    public function showForum(string $slug, EntityManagerInterface $em, Request $request, PaginatorInterface $paginator)
-    {
+    public function showForum(
+        string $slug,
+        EntityManagerInterface $em,
+        Request $request,
+        //CommentGateway $commentGateway,
+        PaginatorInterface $paginator,
+        CommentRepository $commentRepo
+    ) {
         $forumRepo = $this->getDoctrine()->getRepository(Forum::class);
         $forum = $forumRepo->findOneBy(['slug' => $slug]);
         $forumId = $forum->getId();
@@ -71,17 +84,16 @@ class ForumController extends AbstractController
             $em->persist($data);
             $em->flush();
             $this->addFlash('success', 'Votre commentaire à bien été ajouté !');
-            return $this->redirectToRoute('app_forum_display');
+            return $this->redirectToRoute('app_forum_display', [
+                'slug' => $slug
+            ]);
         }
-        $query = $this->getDoctrine()->getRepository(Comment::class);
-        $messages = $query->findBy(
-            ['forum' => $forumId],
-            ['creationDate' => 'DESC']
-        );
+
+        $query = $commentRepo->findAllByForum($forumId);
         $comments = $paginator->paginate(
-            $messages,
-            $request->query->getInt('page', 1), /*page number*/
-            5 /*limit per page*/
+            $query,
+            $request->query->getInt('page', 1),
+            5
         );
 
         return $this->render('forum/forum.html.twig', [
@@ -90,22 +102,4 @@ class ForumController extends AbstractController
             'comment_form' => $form->createView(),
         ]);
     }
-
-    /**
-     * TODO à deplacer dans un CommentController
-     * 
-     * @Route("/forum/delete/{slug}/{commentId}", name="app_forum_remove_comment", methods="DELETE")
-     */
-    /*
-    public function removeComment(int $commentId, string $slug, EntityManagerInterface $em, Request $request)
-    {
-        $comment = $this->getDoctrine()->getRepository(Comment::class)->find($commentId);
-        if ($this->isCsrfTokenValid('delete' . $comment->getId(), $request->get('_token'))) {
-            //$em->remove($comment);
-            //$em->flush();
-        }
-        return $this->redirectToRoute('app_forum_display', [
-            'slug' => $slug,
-        ]);
-    }*/
 }
