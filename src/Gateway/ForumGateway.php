@@ -65,7 +65,7 @@ class ForumGateway
             $page,
             self::FORUMS_PER_PAGE
         );
-
+        dump($this->paginator);
         return $this->paginator;
     }
 }

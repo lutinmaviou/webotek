@@ -36,8 +36,8 @@ class ForumController extends AbstractController
         $query = $this->getDoctrine()->getRepository(forum::class)->findAll();
         $forums = $paginator->paginate(
             $query,
-            $request->query->getInt('page', 1), /*page number*/
-            5 /*limit per page*/
+            $request->query->getInt('page', 1),
+            5
         );
 
         return $this->render('forum/index.html.twig', [
@@ -96,6 +96,7 @@ class ForumController extends AbstractController
      * 
      * @Route("/forum/delete/{slug}/{commentId}", name="app_forum_remove_comment", methods="DELETE")
      */
+    /*
     public function removeComment(int $commentId, string $slug, EntityManagerInterface $em, Request $request)
     {
         $comment = $this->getDoctrine()->getRepository(Comment::class)->find($commentId);
@@ -106,5 +107,5 @@ class ForumController extends AbstractController
         return $this->redirectToRoute('app_forum_display', [
             'slug' => $slug,
         ]);
-    }
+    }*/
 }
