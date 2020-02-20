@@ -5,19 +5,15 @@ namespace App\Gateway;
 use App\Entity\Forum;
 use App\Repository\ForumRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface as PaginationInterfaceAlias;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ForumGateway
 {
 
     const FORUMS_PER_PAGE = 8;
-
-    /**
-     * @var PaginatorInterface
-     *
-     */
-    private $paginator;
 
     /**
      * @var ForumRepository
@@ -57,16 +53,17 @@ class ForumGateway
         $this->em->flush();
     }
 
-    public function paginatedListForums($page): PaginatorInterface
+    /**
+     * @param $page
+     * @return PaginationInterfaceAlias
+     */
+    public function paginatedListForums($page)
     {
         $query = $this->forumRepository->findAllQuery();
-        $pagination = $this->paginator->paginate(
+        return $this->paginator->paginate(
             $query,
             $page,
             self::FORUMS_PER_PAGE
         );
-        dump($pagination);
-        dump($this->paginator);
-        return $this->paginator;
     }
 }

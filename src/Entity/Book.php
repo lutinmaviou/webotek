@@ -16,10 +16,7 @@ class Book
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $title;
+
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -41,17 +38,7 @@ class Book
         return $this->id;
     }
 
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
 
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
-
-        return $this;
-    }
 
     public function getAuthor(): ?string
     {

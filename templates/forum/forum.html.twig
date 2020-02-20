@@ -30,7 +30,7 @@ webOtek - La grande bibliothèque en ligne. Forum ouvert sur le sujet de discuss
 						{% if is_granted('ROLE_ADMIN') %}
 						<th id="delete" class="text-center">
 							<form method="POST"
-								action="{{ path('app_forum_remove_comment', {slug: forum.slug, commentId: comment.id}) }}"
+								action="{{ path('app_forum_remove_comment', {id: comment.id}) }}"
 								onsubmit="return confirm('Confirmer la suppression ?')">
 								<input type="hidden" name="_method" value="DELETE">
 								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">

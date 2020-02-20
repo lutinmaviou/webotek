@@ -2,28 +2,30 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Comment;
+use App\Entity\Forum;
 use App\Form\NewCommentType;
 use App\Form\NewForumType;
 use App\Gateway\CommentGateway;
 use App\Gateway\ForumGateway;
 use App\Repository\CommentRepository;
-use App\Repository\ForumRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ForumController extends AbstractController
 {
     /**
      * @Route("/forums", name="app_forums")
+     * @param ForumGateway $forumGateway
+     * @param Request $request
+     * @return RedirectResponse|Response
      */
     public function addForum(
-        ForumGateway $forumGateway,
-        Request $request,
-        PaginatorInterface $paginator,
-        ForumRepository $forumRepo
+        ForumGateway $forumGateway, Request $request
     ) {
         $form = $this->createForm(NewForumType::class);
         $form->handleRequest($request);
@@ -36,17 +38,7 @@ class ForumController extends AbstractController
             ]);
         }
 
-        //$forums = $forumGateway->paginatedListForums($request->query->getInt('page', 1));
-        //dump($forums);
-
-        $query = $forumRepo->findAllQuery();
-        dump($query);
-        $forums = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1),
-            5
-        );
-        dump($forums);
+        $forums = $forumGateway->paginatedListForums($request->query->getInt('page', 1));
 
         return $this->render('forum/index.html.twig', [
             'new_forum_form' => $form->createView(),
@@ -56,25 +48,20 @@ class ForumController extends AbstractController
 
     /**
      * @Route("/forum/{slug}", name="app_forum_display", methods="GET|POST")
+     * @param Forum $forum
+     * @param Request $request
+     * @param CommentGateway $commentGateway
+     * @param PaginatorInterface $paginator
+     * @param CommentRepository $commentRepo
+     * @return RedirectResponse|Response
      */
     public function showForum(
-        string $slug,
+        Forum $forum,
         Request $request,
-        ForumRepository $forumRepo,
         CommentGateway $commentGateway,
         PaginatorInterface $paginator,
         CommentRepository $commentRepo
     ) {
-        /*
-        dump($slug);
-        $forum = $forumRepo->findForumBySlug($slug);
-        dd($forum);
-        $forumId = $forum->getId();
-        */
-
-        dump($slug);
-        $forum = $forumRepo->findOneBy(['slug' => $slug]);
-        $forumId = $forum->getId();
 
         $comment = new Comment();
         $form = $this->createForm(NewCommentType::class, $comment);
@@ -82,18 +69,18 @@ class ForumController extends AbstractController
         if ($this->getUser()) {
             // Get the pseudo of the connected user
             $userPseudo = $this->getUser()->getPseudo();
+            $comment->setAuthor($userPseudo);
         }
         if ($form->isSubmitted() && $form->isValid()) {
-            $comment->setAuthor($userPseudo);
             $comment->setForum($forum);
             $commentGateway->save($form->getData());
             $this->addFlash('success', 'Votre commentaire à bien été ajouté !');
             return $this->redirectToRoute('app_forum_display', [
-                'slug' => $slug
+                'slug' => $forum->getSlug()
             ]);
         }
 
-        $query = $commentRepo->findAllByForum($forumId);
+        $query = $commentRepo->findAllByForum($forum->getId());
         $comments = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
