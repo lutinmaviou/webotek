@@ -5,7 +5,6 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use App\Entity\Forum;
 use App\Entity\Comment;
 use App\Form\NewCommentType;
 use App\Form\NewForumType;
@@ -13,7 +12,6 @@ use App\Gateway\CommentGateway;
 use App\Gateway\ForumGateway;
 use App\Repository\CommentRepository;
 use App\Repository\ForumRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
 class ForumController extends AbstractController
@@ -38,14 +36,17 @@ class ForumController extends AbstractController
             ]);
         }
 
-        // $forums = $forumGateway->paginatedListForums($request->query->getInt('page', 1));
+        //$forums = $forumGateway->paginatedListForums($request->query->getInt('page', 1));
+        //dump($forums);
 
         $query = $forumRepo->findAllQuery();
+        dump($query);
         $forums = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
             5
         );
+        dump($forums);
 
         return $this->render('forum/index.html.twig', [
             'new_forum_form' => $form->createView(),
@@ -58,13 +59,20 @@ class ForumController extends AbstractController
      */
     public function showForum(
         string $slug,
-        EntityManagerInterface $em,
         Request $request,
-        //CommentGateway $commentGateway,
+        ForumRepository $forumRepo,
+        CommentGateway $commentGateway,
         PaginatorInterface $paginator,
         CommentRepository $commentRepo
     ) {
-        $forumRepo = $this->getDoctrine()->getRepository(Forum::class);
+        /*
+        dump($slug);
+        $forum = $forumRepo->findForumBySlug($slug);
+        dd($forum);
+        $forumId = $forum->getId();
+        */
+
+        dump($slug);
         $forum = $forumRepo->findOneBy(['slug' => $slug]);
         $forumId = $forum->getId();
 
@@ -76,13 +84,9 @@ class ForumController extends AbstractController
             $userPseudo = $this->getUser()->getPseudo();
         }
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $comment->setCreationDate(new \DateTime());
             $comment->setAuthor($userPseudo);
-            $comment->setStatus(0);
             $comment->setForum($forum);
-            $em->persist($data);
-            $em->flush();
+            $commentGateway->save($form->getData());
             $this->addFlash('success', 'Votre commentaire à bien été ajouté !');
             return $this->redirectToRoute('app_forum_display', [
                 'slug' => $slug

@@ -34,8 +34,9 @@ class CommentGateway
         $this->em->flush();
     }
 
-    public function show()
+    public function save(Comment $comment)
     {
-        $query = $this->commentRepo->findComments();
+        $this->em->persist($comment);
+        $this->em->flush();
     }
 }

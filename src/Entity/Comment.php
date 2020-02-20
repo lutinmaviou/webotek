@@ -41,6 +41,13 @@ class Comment
      */
     private $forum;
 
+
+    public function __construct()
+    {
+        $this->status = 0;
+        $this->creationDate =  new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

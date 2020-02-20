@@ -50,19 +50,14 @@ class CommentRepository extends ServiceEntityRepository
     */
 
     /**
-     * @return Query
+     * @return Array
      */
-    public function findAllByForum($forumId)
+    public function findAllByForum($forumId): array
     {
         return $this->createQueryBuilder('c')
             ->where('c.forum = ' . $forumId . '')
             ->orderBy('c.creationDate', 'DESC')
             ->getQuery()
             ->getResult();
-    }
-
-    public function findComments()
-    {
-        return $this->findBy(array(), ['creationDate' => 'DESC']);
     }
 }

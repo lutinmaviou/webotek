@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -47,7 +46,7 @@ class Forum
     public function __construct()
     {
         $this->comments = new ArrayCollection();
-        $this->creationDate =  new DateTime();
+        $this->creationDate =  new \DateTime();
     }
 
     public function getId(): ?int

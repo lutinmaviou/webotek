@@ -27,4 +27,12 @@ class ForumRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('f')->getQuery();
     }
+
+    public function findForumBySlug(string $slug)
+    {
+        return $this->createQueryBuilder('f')
+            ->where('f.slug = ' . $slug . '')
+            ->getQuery()
+            ->getResult();
+    }
 }

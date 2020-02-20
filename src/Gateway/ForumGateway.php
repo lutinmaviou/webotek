@@ -15,6 +15,7 @@ class ForumGateway
 
     /**
      * @var PaginatorInterface
+     *
      */
     private $paginator;
 
@@ -64,6 +65,7 @@ class ForumGateway
             $page,
             self::FORUMS_PER_PAGE
         );
+        dump($pagination);
         dump($this->paginator);
         return $this->paginator;
     }
