@@ -5,10 +5,12 @@ namespace App\Gateway;
 use App\Entity\Comment;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 class CommentGateway
 {
+    private const COMMENTS_PER_PAGE = 5;
 
     /**
      * @var EntityManagerInterface
@@ -16,16 +18,23 @@ class CommentGateway
     private $em;
 
     /**
-     * @var CommentRepo
+     * @var CommentRepository
      */
-    private $commentRepo;
+    private $commentRepository;
+
+    /**
+     * @var PaginatorInterface
+     */
+    private $paginator;
 
     public function __construct(
+        PaginatorInterface $paginator,
         EntityManagerInterface $em,
         CommentRepository $commentRepo
     ) {
+        $this->paginator = $paginator;
         $this->em = $em;
-        $this->commentRepo = $commentRepo;
+        $this->commentRepository = $commentRepo;
     }
 
     public function delete(Comment $comment)
@@ -40,5 +49,18 @@ class CommentGateway
         $this->em->flush();
     }
 
-
+    /**
+     * @param $forum
+     * @param $page
+     * @return PaginationInterface
+     */
+    public function paginatedListComments($forum, $page)
+    {
+        $query = $this->commentRepository->findAllByForum($forum);
+        return $this->paginator->paginate(
+            $query,
+            $page,
+            self::COMMENTS_PER_PAGE
+        );
+    }
 }

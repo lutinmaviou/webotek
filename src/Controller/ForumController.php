@@ -70,22 +70,19 @@ class ForumController extends AbstractController
             // Get the pseudo of the connected user
             $userPseudo = $this->getUser()->getPseudo();
             $comment->setAuthor($userPseudo);
-        }
-        if ($form->isSubmitted() && $form->isValid()) {
-            $comment->setForum($forum);
-            $commentGateway->save($form->getData());
-            $this->addFlash('success', 'Votre commentaire à bien été ajouté !');
-            return $this->redirectToRoute('app_forum_display', [
-                'slug' => $forum->getSlug()
-            ]);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $comment->setForum($forum);
+                $commentGateway->save($form->getData());
+                $this->addFlash('success', 'Votre commentaire à bien été ajouté !');
+                return $this->redirectToRoute('app_forum_display', [
+                    'slug' => $forum->getSlug()
+                ]);
+            }
         }
 
-        $query = $commentRepo->findAllByForum($forum->getId());
-        $comments = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1),
-            5
-        );
+        $comments = $commentGateway->paginatedListComments(
+            $forum->getId(),
+            $request->query->getInt('page', 1));
 
         return $this->render('forum/forum.html.twig', [
             'comments' => $comments,
