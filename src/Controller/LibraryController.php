@@ -15,4 +15,11 @@ class LibraryController extends AbstractController
     {
         return $this->render('library/home.html.twig');
     }
+
+    /**
+     * @Route("/legals", name="app_legals")
+     */
+    public function showLegals(){
+        return $this->render('library/legals.html.twig');
+    }
 }
