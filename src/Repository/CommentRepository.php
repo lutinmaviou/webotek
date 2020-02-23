@@ -21,12 +21,13 @@ class CommentRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Array
+     * @param $forumId
+     * @return array
      */
     public function findAllByForum($forumId): array
     {
         return $this->createQueryBuilder('c')
-            ->where('c.forum = ' . $forumId . '')
+            ->where("c.forum = {$forumId}")
             ->orderBy('c.creationDate', 'DESC')
             ->getQuery()
             ->getResult();

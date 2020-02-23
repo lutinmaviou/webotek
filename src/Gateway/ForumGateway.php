@@ -7,7 +7,6 @@ use App\Repository\ForumRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ForumGateway

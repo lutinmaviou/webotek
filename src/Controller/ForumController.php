@@ -26,7 +26,8 @@ class ForumController extends AbstractController
      */
     public function addForum(
         ForumGateway $forumGateway, Request $request
-    ) {
+    )
+    {
         $form = $this->createForm(NewForumType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -58,11 +59,9 @@ class ForumController extends AbstractController
     public function showForum(
         Forum $forum,
         Request $request,
-        CommentGateway $commentGateway,
-        PaginatorInterface $paginator,
-        CommentRepository $commentRepo
-    ) {
-
+        CommentGateway $commentGateway
+    )
+    {
         $comment = new Comment();
         $form = $this->createForm(NewCommentType::class, $comment);
         $form->handleRequest($request);
@@ -73,7 +72,7 @@ class ForumController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
                 $comment->setForum($forum);
                 $commentGateway->save($form->getData());
-                $this->addFlash('success', 'Votre commentaire à bien été ajouté !');
+                $this->addFlash('success', 'Votre commentaire a bien été ajouté !');
                 return $this->redirectToRoute('app_forum_display', [
                     'slug' => $forum->getSlug()
                 ]);

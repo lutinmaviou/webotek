@@ -33,4 +33,8 @@ class CommentController extends AbstractController
             'slug' => $comment->getForum()->getSlug(),
         ]);
     }
+
+    public function changeCommentStatus(){
+
+    }
 }
