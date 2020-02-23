@@ -34,7 +34,22 @@ class CommentController extends AbstractController
         ]);
     }
 
-    public function changeCommentStatus(){
+    /**
+     * @Route("/comments/{id}", name="app_forum_report_comment", methods={"POST"})
+     * @param Comment $comment
+     * @param CommentGateway $commentGateway
+     * @return RedirectResponse
+     */
+    public function reportComment(
+        Comment $comment,
+        CommentGateway $commentGateway
+    )
+    {
+        $comment->setStatus(1);
+        $commentGateway->save($comment);
 
+        return $this->redirectToRoute('app_forum_display', [
+            'slug' => $comment->getForum()->getSlug(),
+        ]);
     }
 }
