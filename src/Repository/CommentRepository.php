@@ -6,6 +6,7 @@ use App\Entity\Comment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query;
+use phpDocumentor\Reflection\Types\Array_;
 
 /**
  * @method Comment|null find($id, $lockMode = null, $lockVersion = null)
@@ -29,6 +30,17 @@ class CommentRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->where("c.forum = {$forumId}")
             ->orderBy('c.creationDate', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return array
+     */
+    public function findReportedComments(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.status = 1')
             ->getQuery()
             ->getResult();
     }

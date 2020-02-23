@@ -40,6 +40,7 @@ class ForumController extends AbstractController
         }
 
         $forums = $forumGateway->paginatedListForums($request->query->getInt('page', 1));
+        dump($forums);
 
         return $this->render('forum/index.html.twig', [
             'new_forum_form' => $form->createView(),
@@ -52,8 +53,6 @@ class ForumController extends AbstractController
      * @param Forum $forum
      * @param Request $request
      * @param CommentGateway $commentGateway
-     * @param PaginatorInterface $paginator
-     * @param CommentRepository $commentRepo
      * @return RedirectResponse|Response
      */
     public function showForum(
@@ -79,7 +78,7 @@ class ForumController extends AbstractController
             }
         }
 
-        $comments = $commentGateway->paginatedListComments(
+        $comments = $commentGateway->paginatedCommentsList(
             $forum->getId(),
             $request->query->getInt('page', 1));
 

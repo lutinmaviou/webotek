@@ -39,8 +39,8 @@ class CommentGateway
 
     public function delete(Comment $comment)
     {
-        $this->em->remove($comment);
-        $this->em->flush();
+        //$this->em->remove($comment);
+        //$this->em->flush();
     }
 
     public function save(Comment $comment)
@@ -54,9 +54,23 @@ class CommentGateway
      * @param $page
      * @return PaginationInterface
      */
-    public function paginatedListComments($forum, $page)
+    public function paginatedCommentsList($forum, $page)
     {
         $query = $this->commentRepository->findAllByForum($forum);
+        return $this->paginator->paginate(
+            $query,
+            $page,
+            self::COMMENTS_PER_PAGE
+        );
+    }
+
+    /**
+     * @param $page
+     * @return PaginationInterface
+     */
+    public function paginatedReportedCommentsList($page)
+    {
+        $query = $this->commentRepository->findReportedComments();
         return $this->paginator->paginate(
             $query,
             $page,
