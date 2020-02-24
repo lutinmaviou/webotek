@@ -45,11 +45,12 @@
 <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
     <div class="container">
         <a class="navbar-brand js-scroll-trigger" href="{{ path('app_home') }}">
-            <h1 id="main-title">webOtek</h1>
+            <h1 id="main-title" class="mb-md-n1">webOtek</h1>
         </a>
-            {% if is_granted('ROLE_ADMIN') %}
-                <a class="btn btn-danger" href="{{ path('app_forum_reported_comments') }}">Messages signalés</a>
-            {% endif %}
+        {% if is_granted('ROLE_ADMIN') %}
+            <a class="btn btn-danger ml-lg-5" href="{{ path('app_forum_reported_comments') }}">Messages signalés
+                ({{ reported.getTotalItemCount }})</a>
+        {% endif %}
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
                 data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
                 aria-label="Toggle navigation">
