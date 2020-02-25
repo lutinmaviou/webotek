@@ -46,7 +46,7 @@ class LibraryController extends AbstractController
             $request->query->getInt('page', 1)
         );
 
-        return $this->render('library/home.html.twig', [
+        return $this->render('library/legals.html.twig', [
             'reported' => $reportedComments
         ]);
         return $this->render('library/legals.html.twig');
