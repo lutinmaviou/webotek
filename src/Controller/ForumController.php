@@ -22,10 +22,13 @@ class ForumController extends AbstractController
      * @Route("/forums", name="app_forums")
      * @param ForumGateway $forumGateway
      * @param Request $request
+     * @param $commentGateway
      * @return RedirectResponse|Response
      */
     public function addForum(
-        ForumGateway $forumGateway, Request $request
+        ForumGateway $forumGateway,
+        Request $request,
+        CommentGateway $commentGateway
     )
     {
         $form = $this->createForm(NewForumType::class);
@@ -40,11 +43,15 @@ class ForumController extends AbstractController
         }
 
         $forums = $forumGateway->paginatedListForums($request->query->getInt('page', 1));
-        dump($forums);
+
+        $reportedComments = $commentGateway->paginatedReportedCommentsList(
+            $request->query->getInt('page', 1)
+        );
 
         return $this->render('forum/index.html.twig', [
             'new_forum_form' => $form->createView(),
-            'forums' => $forums
+            'forums' => $forums,
+            'reported' => $reportedComments
         ]);
     }
 
@@ -82,10 +89,15 @@ class ForumController extends AbstractController
             $forum->getId(),
             $request->query->getInt('page', 1));
 
+        $reportedComments = $commentGateway->paginatedReportedCommentsList(
+            $request->query->getInt('page', 1)
+        );
+
         return $this->render('forum/forum.html.twig', [
             'comments' => $comments,
             'forum' => $forum,
             'comment_form' => $form->createView(),
+            'reported' => $reportedComments
         ]);
     }
 }
