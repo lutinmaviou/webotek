@@ -8,8 +8,6 @@ use App\Form\NewCommentType;
 use App\Form\NewForumType;
 use App\Gateway\CommentGateway;
 use App\Gateway\ForumGateway;
-use App\Repository\CommentRepository;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

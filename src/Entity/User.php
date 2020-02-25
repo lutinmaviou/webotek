@@ -23,7 +23,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank()
-     * @Assert\Email(groups={"register"})
+     * @Assert\Email(groups={"registration"})
      */
     private $email;
 
@@ -33,24 +33,24 @@ class User implements UserInterface
     private $roles;
 
     /**
-     * @var string The non hashed password
      * @ORM\Column(type="string")
+     * @Assert\Length(min=6, max=25, groups={"registration"})
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $firstName;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(max=255, groups={"registration"})
      */
     private $pseudo;
 

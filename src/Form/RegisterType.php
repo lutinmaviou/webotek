@@ -15,18 +15,18 @@ class RegisterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstName')
-//            ->add('lastName')
+            // ->add('firstName')
+            // ->add('lastName')
             ->add('pseudo')
             ->add('email')
-            ->add('password',PasswordType::class);
+            ->add('password', PasswordType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'validation_groups' =>['register']
+            'validation_groups' => ['registration']
 
         ]);
     }
