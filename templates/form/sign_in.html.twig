@@ -12,7 +12,8 @@ Inscription - webOtek - La grande bibliothèque en ligne
             {{ form_errors(sign_in_form) }}
             {{ form_row(sign_in_form.pseudo, {'label': 'Pseudo'}) }}
             {{ form_row(sign_in_form.email, {'label': 'Email'}) }}
-            {{ form_row(sign_in_form.password, {'label': 'Mot de passe'}) }}
+            {{ form_row(sign_in_form.password.first) }}
+            {{ form_row(sign_in_form.password.second) }}
             <button type="submit" class="btn btn-success">Valider</button>
             {{ form_end(sign_in_form) }}
 
