@@ -23,6 +23,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank()
+     * @Assert\NotNull()
      * @Assert\Email(groups={"registration"})
      */
     private $email;
@@ -34,23 +35,33 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Type(type={"alpha", "digit"})
      * @Assert\Length(min=6, max=25, groups={"registration"})
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Type("string")
+     * @Assert\NotBlank()
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Type("string")
+     * @Assert\NotBlank()
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(max=255, groups={"registration"})
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Type("string")
      */
     private $pseudo;
 
@@ -88,7 +99,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -115,7 +126,7 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(string $password): self
