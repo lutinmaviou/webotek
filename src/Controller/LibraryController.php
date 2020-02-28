@@ -22,6 +22,7 @@ class LibraryController extends AbstractController
         Request $request
     )
     {
+
         $reportedComments = $commentGateway->paginatedReportedCommentsList(
             $request->query->getInt('page', 1)
         );
