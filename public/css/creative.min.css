@@ -10683,24 +10683,21 @@ hr.light {
 }
 
 #go {
+    border-left: none;
+    border-radius: 0 0.5rem 0.5rem 0;
+    background-color: #ff5728;
+    border: 3px solid #ff5728;
     background-color: #ff5728;
     font-weight: bold;
     color: white;
 }
 
-#btn-go {
-    border-left: none;
-    border-radius: 0 0.5rem 0.5rem 0;
-    background-color: #ff5728;
-    border: 3px solid #ff5728;
-}
-
-#btn-go:hover {
+#go:hover {
     border: 3px solid #582900;
     box-shadow: 0 0 0 .2rem rgba(244, 98, 58, .25)
 }
 
-#btn-go:hover a {
+#go:hover a {
     color: #582900;
 }
 
