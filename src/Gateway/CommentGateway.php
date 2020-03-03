@@ -39,8 +39,8 @@ class CommentGateway
 
     public function delete(Comment $comment)
     {
-        //$this->em->remove($comment);
-        //$this->em->flush();
+        $this->em->remove($comment);
+        $this->em->flush();
     }
 
     public function save(Comment $comment)

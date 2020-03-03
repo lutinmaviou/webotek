@@ -30,8 +30,6 @@ class CommentController extends AbstractController
             $this->addFlash('success', 'Message supprimé avec succès !');
         }
 
-        dump($request);
-
         return $this->redirectToRoute('app_forum_reported_comments', [
             'slug' => $comment->getForum()->getSlug(),
         ]);
