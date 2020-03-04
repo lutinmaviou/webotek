@@ -36,18 +36,17 @@
                 <div class="col-lg-8 align-self-baseline">
                     <div class="input-group mb-3 mt-5" id="search-bar">
                         <form>
-                            <input type="text">
-                        </form>
+                            <label for="search"></label>
+                            <input type="text" id="search" class="text-center text-primary"
+                                   placeholder="Rechercher un livre" required></form>
                         {#
                         <label for="search"></label>
                         <input class="btn btn-primary btn-xl" type="search" id="search"
                                placeholder="Rechercher un livre" required>
                                #}
-                        <div class="input-group-append">
                             <button onclick="window.location.href='#results'" type="submit" id="go"
-                                    class="btn btn-primary js-scroll-trigger pb-2">GO
+                                    class="btn btn-primary js-scroll-trigger pb-2 bg-primary">GO
                             </button>
-                        </div>
                     </div>
                 </div>
             </div>

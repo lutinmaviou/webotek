@@ -10,7 +10,7 @@
     padding-top: 8rem;
 }
 
-#contact{
+#contact {
     margin-top: 15vh;
 }
 
@@ -50,16 +50,16 @@
         width: 90%;
         margin-left: 1rem;
     }
-}
 
-@media screen and (max-width: 768px) {
-    #message-flash {
-        margin-bottom: -8rem !important;
+    @media screen and (max-width: 768px) {
+        #message-flash {
+            margin-bottom: -8rem !important;
+        }
     }
-}
 
-@media screen and (min-width: 768px) {
-    #message-flash {
-        width: 50%;
+    @media screen and (min-width: 768px) {
+        #message-flash {
+            width: 50%;
+        }
     }
 }

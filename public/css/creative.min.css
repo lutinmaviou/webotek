@@ -10673,28 +10673,19 @@ hr.light {
 }
 
 #search {
-    border-right: none;
-    border-radius: 0.5rem 0 0 0.5rem;
-    width: 40%;
+    border: none;
+    width: 90%;
+    border-radius: 0.2rem;
+    padding: 10px;
 }
 
 #search-bar {
     justify-content: center;
 }
 
-#go {
-    border-left: none;
-    border-radius: 0 0.5rem 0.5rem 0;
-    background-color: #ff5728;
-    border: 3px solid #ff5728;
-    background-color: #ff5728;
-    font-weight: bold;
-    color: white;
-}
-
 #go:hover {
-    border: 3px solid #582900;
-    box-shadow: 0 0 0 .2rem rgba(244, 98, 58, .25)
+    box-shadow: 0 0 0 .2rem rgba(244, 98, 58, .25);
+    color: orangered;
 }
 
 #go:hover a {
