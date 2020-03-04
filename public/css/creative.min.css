@@ -10685,7 +10685,7 @@ hr.light {
 
 #go:hover {
     box-shadow: 0 0 0 .2rem rgba(244, 98, 58, .25);
-    color: orangered;
+    color: white;
 }
 
 #go:hover a {
