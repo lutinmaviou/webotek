@@ -25,7 +25,6 @@ class App {
         $('#display-button').empty();
         this.search = $('#search').val();
         this.url = this.api + this.search + this.options;
-        //console.log(this.url);
         new AjaxGet(this.url);
     }
 
@@ -76,17 +75,12 @@ class App {
         }
     }
 
-    addBook() {
-        console.log('clic');
-        new AjaxPost();
-    }
-
     // "Click" functions assignation
-
     assign() {
         $('#go').click(this.bookSearch);
         $('#display-button').click(this.seeMore);
         $('#toto').click(this.addBook);
     }
 }
+
 new App(3);
