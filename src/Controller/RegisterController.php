@@ -32,8 +32,8 @@ class RegisterController extends AbstractController
             $user->setRoles(['ROLE_USER']);
             $data = $form->getData();
             $email = $data->getEmail();
-            //$em->persist($data);
-            //$em->flush();
+            $em->persist($data);
+            $em->flush();
             $this->addFlash('success', 'Votre compte à bien été enregistré !');
 
             return $this->redirectToRoute('app_login');
