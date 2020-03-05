@@ -62,18 +62,18 @@
                 {% block home_link %}{% endblock %}
                 {% if not app.user %}
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="{{ path('app_login') }}">Connexion</a>
+                        <a class="nav-link js-scroll-trigger text-success" href="{{ path('app_login') }}">Connexion</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="{{ path('app_sign_in') }}">Inscription</a>
+                        <a class="nav-link js-scroll-trigger text-success" href="{{ path('app_sign_in') }}">Inscription</a>
                     </li>
                 {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="{{ path('app_forums') }}">Forums</a>
+                    <a class="nav-link js-scroll-trigger text-success" href="{{ path('app_forums') }}">Forums</a>
                 </li>
                 {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="{{ path('app_logout') }}">Déconnexion</a>
+                        <a class="nav-link js-scroll-trigger text-success" href="{{ path('app_logout') }}">Déconnexion</a>
                     </li>
                 {% endif %}
             </ul>
@@ -89,21 +89,16 @@
 
 {% block body %}{% endblock %}
 
+{% block logo %}
+{% endblock %}
+
 <!-- Footer -->
 <footer class="bg-light py-5">
 
     <div class="container">
-        <div class="small text-center text-muted">Copyright &copy; 2020 - webOtek - Tous droits réservés.
+        <div class="small text-center text-muted mt-5">Copyright &copy; 2020 - webOtek - Tous droits réservés.
             <span class="ml-2"><a href="{{ path('app_legals') }}">Mentions légales</a></span>
         </div>
-    </div>
-
-    <div class="container text-center mt-5">
-        <p>
-                <img style="border:0;width:88px;height:31px"
-                     src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
-                     alt="CSS Valide !"/>
-        </p>
     </div>
 </footer>
 
