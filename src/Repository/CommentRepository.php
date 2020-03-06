@@ -41,6 +41,7 @@ class CommentRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
             ->where('c.status = 1')
+            ->orderBy('c.creationDate', 'DESC')
             ->getQuery()
             ->getResult();
     }
