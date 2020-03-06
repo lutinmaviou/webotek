@@ -25,6 +25,8 @@ class ForumRepository extends ServiceEntityRepository
      */
     public function findAllQuery(): Query
     {
-        return $this->createQueryBuilder('f')->getQuery();
+        return $this->createQueryBuilder('f')
+            ->orderBy('f.creationDate', 'DESC')
+            ->getQuery();
     }
 }
