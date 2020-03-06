@@ -51,6 +51,10 @@
         margin-left: 1rem;
     }
 
+    #my-logo {
+        display: none;
+    }
+
     @media screen and (max-width: 768px) {
         #message-flash {
             margin-bottom: -8rem !important;

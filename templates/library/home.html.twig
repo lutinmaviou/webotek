@@ -37,13 +37,8 @@
                     <div class="input-group mb-3 mt-5" id="search-bar">
                         <form>
                             <label for="search"></label>
-                            <input type="text" id="search" class="text-center text-primary"
+                            <input type="text" id="search" class="text-center text-primary ml-3"
                                    placeholder="Rechercher un livre" required></form>
-                        {#
-                        <label for="search"></label>
-                        <input class="btn btn-primary btn-xl" type="search" id="search"
-                               placeholder="Rechercher un livre" required>
-                               #}
                             <button onclick="window.location.href='#results'" type="submit" id="go"
                                     class="btn btn-primary js-scroll-trigger pb-2 bg-primary">GO
                             </button>
@@ -160,13 +155,14 @@
 {% endblock %}
 
 {% block logo %}
-    <div class="container text-center mt-5 mb-n5">
+    <div class="container text-center mt-5 mb-n5" id="my-logo">
         <img src="{{ asset('img/logo.png') }}" alt="Mon logo webOtek" class="rounded-pill">
 
         <p>
             <img style="border:0;width:88px;height:31px"
                  src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
                  alt="CSS Valide !"/>
+
         </p>
     </div>
 {% endblock %}
