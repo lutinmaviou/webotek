@@ -76,11 +76,6 @@ class App {
         }
     }
 
-    addBook() {
-        console.log('clic');
-        new AjaxPost();
-    }
-
     // "Click" functions assignation
 
     assign() {
